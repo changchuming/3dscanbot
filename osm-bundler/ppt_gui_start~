@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /home/arcteam/software/osm-bundler_mt/linux/
+python ./ppt_gui.py
