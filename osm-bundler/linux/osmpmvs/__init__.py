@@ -32,18 +32,20 @@ class OsmPmvs():
     # value of command line argument --bundlerOutputPath=<..>
     bundleOutArg = ""
 
-    def __init__(self):
-               
-        self.parseCommandLineFlags()
+    def __init__(self, bundlerOutputPath= None):
 
         # save current directory (i.e. from where RunBundler.py is called)
         self.currentDir = os.getcwd()
-        # create a working directory
-        self.workDir = self.bundleOutArg
+        if (bundlerOutputPath!=None):
+            # create a working directory
+            self.workDir=bundlerOutputPath
+        else:
+            self.parseCommandLineFlags()
+            self.workDir=self.bundleOutArg
+            if not (os.path.isdir(self.bundleOutArg) or os.path.isfile(self.bundleOutArg)):
+                raise Exception, "'%s' is neither directory nor a file name" % self.bundleOutArg
+                
         logging.info("Working directory created: "+self.workDir)
-        
-        if not (os.path.isdir(self.bundleOutArg) or os.path.isfile(self.bundleOutArg)):
-            raise Exception, "'%s' is neither directory nor a file name" % self.bundleOutArg
 
     def parseCommandLineFlags(self):
         try:
