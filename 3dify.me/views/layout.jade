@@ -2,6 +2,9 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/components/bootstrap-css/css/bootstrap.css')
   body
     block content
+    block footer
+      script(src='components/bootstrap-css/js/bootstrap.min.js', type='text/javascript')

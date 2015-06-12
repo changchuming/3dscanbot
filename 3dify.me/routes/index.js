@@ -17,7 +17,7 @@ exports.index = function(req, res){
   res.render('index', {
 	  title: '3Dify'
   });
-  	var options = {
+  	/*var options = {
 	  scriptPath: '/home/ubuntu/3dscanbot/osm-bundler/linux',
 	  args: ['--photos="./examples/ET"']
 	};
@@ -25,7 +25,7 @@ exports.index = function(req, res){
   		if (err) throw err;
   		// results is an array consisting of messages collected during execution 
   		console.log('results: %j', results);
-  	});
+  	});*/
 };
 
 //##############################################################################################

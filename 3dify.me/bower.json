@@ -1,0 +1,22 @@
+{
+  "name": "3dify.me",
+  "version": "0.0.0",
+  "description": "3dify.me front-end dependencies",
+  "authors": [
+    "Chang Chu-Ming <changchuming@gmail.com>",
+    "Lee Kai Yi <kaiyisg@yahoo.com.sg"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/changchuming/3dscanbot",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "bootstrap-css": "~3.3.4"
+  }
+}
