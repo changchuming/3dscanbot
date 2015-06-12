@@ -1,25 +1,31 @@
 //----------------------------------------------------------------------------------------------
 // Module dependencies
 //----------------------------------------------------------------------------------------------
-var express = require('express.io');
+// Express.io, combination of express and socket.io
+var express = require('express.io'); 
 var app = module.exports = express();
-var favicon = require('serve-favicon');
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
-app.configure(function(){
-  app.use(express.bodyParser());
-  app.use(app.router);
-});
 app.http().io();
-var http = require('http');
-var path = require('path');
+// Serve-favicon, module to display favicon
+var favicon = require('serve-favicon'); 
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+// Redis, database module
 var redis = require('redis')
 redisClient = redis.createClient();
+// Kue, queueing module
+var kue = require('kue');
+// Standard stuff
+app.configure(function(){
+	  app.use(express.bodyParser());
+	  app.use(app.router);
+	});
+var http = require('http');
+var path = require('path');
 
 //----------------------------------------------------------------------------------------------
 // Routes
 //----------------------------------------------------------------------------------------------
 var routes = require('./routes');
-var user = require('./routes/users');
+var result = require('./routes/result');
 //----------------------------------------------------------------------------------------------
 // Express - All environments
 //----------------------------------------------------------------------------------------------
@@ -58,8 +64,29 @@ app.listen(app.get('port'), function(){
    console.log("Express server listening on port " + app.get('port'));
 });
 
+//----------------------------------------------------------------------------------------------
+//Create job queue
+//----------------------------------------------------------------------------------------------
+var jobs = kue.createQueue();
+
+function newJob (){
+	 var job = jobs.create('queue');
+	 job.save();
+	}
+
+jobs.process('queue', function (job, done){
+	 console.log('Job', job.id, 'is done');
+	 done && done();
+	})
+	
+setInterval(newJob, 3000);
+
 //##############################################################################################
-// Display home page
+// Display landing page
 //##############################################################################################
 app.get('/', routes.index);
-//app.get('/users', user.list);
+
+//##############################################################################################
+//Display result of run
+//##############################################################################################
+app.get('/:result', result.display);
