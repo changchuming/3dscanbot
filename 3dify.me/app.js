@@ -69,23 +69,22 @@ app.listen(app.get('port'), function(){
 //----------------------------------------------------------------------------------------------
 var jobs = kue.createQueue();
 
-function newJob (){
-	 var job = jobs.create('queue');
-	 job.save();
-	}
-
-jobs.process('queue', function (job, done){
+jobs.process('reconstruction', function (job, done){
 	 console.log('Job', job.id, 'is done');
 	 done && done();
 	})
-	
-setInterval(newJob, 3000);
+
+function newJob (){
+	 var job = jobs.create('reconstruction');
+	 job.save();
+	}
 
 //##############################################################################################
 // Display landing page
 //##############################################################################################
 app.get('/', routes.index);
 
+app.post('/upload', routes.upload)
 //##############################################################################################
 //Display result of run
 //##############################################################################################
