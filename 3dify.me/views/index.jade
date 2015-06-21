@@ -1,7 +1,13 @@
 extends layout
-
+  
 block content
   link(rel='stylesheet', href='/css/index.css')
+  //
+    h1= title
+    p Welcome to #{title}
+      h1(id="title") Upload your 2D Images
+      button(class="btn", data-action="bea").
+        Upload
   nav.navbar.navbar-inverse.navbar-fixed-top
     .container
       .navbar-header
