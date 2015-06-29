@@ -7,8 +7,8 @@
 // Module dependencies
 //----------------------------------------------------------------------------------------------
 var app = require('../app');
+var execPipe = require('../modules/execpipe');
 var jobs = app.jobs;
-var PythonShell = require('python-shell');
  
 //##############################################################################################
 // Display home page
@@ -32,15 +32,7 @@ exports.index = function(req, res){
 //Uploads files and adds to queue
 //##############################################################################################
 exports.upload = function(req, res){
-	var options = {
-	  scriptPath: '/home/ubuntu/3dscanbot/osm-bundler/linux',
-	  args: ['--photos="./examples/ET"']
-	};
-	PythonShell.run('RunBundlerPMVSMeshlab.py', options, function (err, results) {
-  		if (err) throw err;
-  		// results is an array consisting of messages collected during execution 
-  		console.log('results: %j', results);
-	});
+	execPipe('/home/ubuntu/3dscanbot/osm-bundler/examples/ET');
 	/*(if(req.files.myUpload){
 		var python = require('child_process').spawn(
 			'python',

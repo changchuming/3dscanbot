@@ -66,55 +66,59 @@ app.listen(app.get('port'), function(){
 });
 
 //----------------------------------------------------------------------------------------------
-//Create job queue
+//Create job queue - should be moved to index.js
 //----------------------------------------------------------------------------------------------
-var jobs = kue.createQueue();
-
-jobs.process('reconstruction', function (job, done){
-	 console.log('Job', job.id, 'is done');
-	 done && done();
-	})
-
-function newJob (){
-	 var job = jobs.create('reconstruction');
-	 job.save();
-	}
+//var jobs = kue.createQueue();
+//
+//jobs.process('reconstruction', function (job, done){
+//	 console.log('Job', job.id, 'is done');
+//	 done && done();
+//	})
+//
+//function newJob (){
+//	 var job = jobs.create('reconstruction');
+//	 job.save();
+//	}
 
 
 //----------------------------------------------------------------------------------------------
-//Create file upload form
+//Create file upload form - should be moved to index.js
 //----------------------------------------------------------------------------------------------
-http.createServer(function(req, res) {
-	  /* Process the form uploads */
-	  if (req.url == '/upload' && req.method.toLowerCase() == 'post') {
-	    var form = new formidable.IncomingForm();
-	    form.parse(req, function(err, fields, files) {
-	      res.writeHead(200, {'content-type': 'text/plain'});
-	      res.write('received upload:\n\n');
-	      res.end(util.inspect({fields: fields, files: files}));
-	    });
-	 
-	    return;
-	  }
-	 
-	  /* Display the file upload form. */
-	  res.writeHead(200, {'content-type': 'text/html'});
-	  res.end(
-	    '<form action="/upload" enctype="multipart/form-data" method="post">'+
-	    '<input type="text" name="title"><br>'+
-	    '<input type="file" name="upload" multiple="multiple"><br>'+
-	    '<input type="submit" value="Upload">'+
-	    '</form>'
-	  );
-	 
-	}).listen(8080);
+//http.createServer(function(req, res) {
+//	  /* Process the form uploads */
+//	  if (req.url == '/upload' && req.method.toLowerCase() == 'post') {
+//	    var form = new formidable.IncomingForm();
+//	    form.parse(req, function(err, fields, files) {
+//	      res.writeHead(200, {'content-type': 'text/plain'});
+//	      res.write('received upload:\n\n');
+//	      res.end(util.inspect({fields: fields, files: files}));
+//	    });
+//	 
+//	    return;
+//	  }
+//	 
+//	  /* Display the file upload form. */
+//	  res.writeHead(200, {'content-type': 'text/html'});
+//	  res.end(
+//	    '<form action="/upload" enctype="multipart/form-data" method="post">'+
+//	    '<input type="text" name="title"><br>'+
+//	    '<input type="file" name="upload" multiple="multiple"><br>'+
+//	    '<input type="submit" value="Upload">'+
+//	    '</form>'
+//	  );
+//	 
+//	}).listen(8080);
 
 //##############################################################################################
 // Display landing page
 //##############################################################################################
 app.get('/', routes.index);
 
+//##############################################################################################
+//Display result of run
+//##############################################################################################
 app.post('/upload', routes.upload)
+
 //##############################################################################################
 //Display result of run
 //##############################################################################################
