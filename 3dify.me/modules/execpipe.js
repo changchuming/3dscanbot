@@ -17,6 +17,7 @@ var execPipe = function(inputFolder) {
 	        throw err;
 	    }
 	    console.log('called back with result:', result);
+	};
 };
 
 
