@@ -33,23 +33,6 @@ exports.index = function(req, res){
 //##############################################################################################
 exports.upload = function(req, res){
 	execPipe('/home/ubuntu/3dscanbot/osm-bundler/examples/ET');
-	/*(if(req.files.myUpload){
-		var python = require('child_process').spawn(
-			'python',
-			// second argument is array of parameters, e.g.:
-			["/home/ubuntu/3dscanbot/linux/RunBundlerPMVSMeshlab.py"
-			, req.files.myUpload.path]
-		);
-		var output = "";
-		python.stdout.on('data', function(){ output += data });
-		python.on('close', function(code){ 
-		if (code !== 0) {  return res.send(500, code); }
-			return res.send(200, output)
-		});
-	} 
-	else {
-		res.send(500, 'No file found') 
-	}*/
 };
 
 //##############################################################################################
