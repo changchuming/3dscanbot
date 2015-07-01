@@ -14,7 +14,7 @@ var queue = require('../modules/queue');
 //##############################################################################################
 exports.display = function(req, res){
 	console.log('display ' + req.params.jobname);
-  	queue.newJob(req.params.jobname);
+  	//queue.newJob(req.params.jobname);
   	redisClient.hget('jobs', req.params.jobname, function(err, reply){
 		// If schedule invalid
 		if (reply == null) {

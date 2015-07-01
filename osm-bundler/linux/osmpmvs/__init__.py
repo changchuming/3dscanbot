@@ -77,17 +77,17 @@ class OsmPmvs():
         subprocess.call([bundler2PmvsExecutable, "list.txt", "bundle/bundle.out"])
 		
         # Apply radial undistortion to the images
-        print "Running RadialUndistort to undistort input images"
+        #print "Running RadialUndistort to undistort input images"
         subprocess.call([RadialUndistordExecutable, "list.txt", "bundle/bundle.out", "pmvs"])
 		
-        print "Running Bundle2Vis to generate vis.dat"
+        #print "Running Bundle2Vis to generate vis.dat"
         subprocess.call([Bundle2VisExecutable, "pmvs/bundle.rd.out", "pmvs/vis.dat"])
 
         os.chdir(os.path.join(self.workDir,"pmvs"))
         #Rename all the files to the correct name
         undistortTextFile = open("list.rd.txt", "r")
         imagesStrings = undistortTextFile.readlines()
-        print "Move files in the correct directory"
+        #print "Move files in the correct directory"
         cpt = 0
         for imageString in imagesStrings:
           image = imageString.split(".")
@@ -104,7 +104,7 @@ class OsmPmvs():
         logging.info("Finished!")
         
     def doPMVS(self):
-        print "Run PMVS2 : %s " % pmvsExecutable
+        #print "Run PMVS2 : %s " % pmvsExecutable
         subprocess.call([pmvsExecutable, "./", "pmvs_options.txt"])
 	#print "Finished! See the results in the '%s' directory" % self.workDir
 	if sys.platform == "win32": subprocess.call(["explorer", self.workDir])
