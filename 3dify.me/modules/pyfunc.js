@@ -33,10 +33,10 @@ exports.reconstruct = function(jobname) {
     python.on('close', function(code){ 
     	if (code !== 0) {
     		app.io.room(jobname).broadcast('error', code);
-    		//return res.send(500, code);
 		}
-		app.io.room(jobname).broadcast('success', output);
-    	//return res.send(200, output)
-    	//return res.end();
+		app.io.room(jobname).broadcast('progress', 'done');
+		redisClient.set('progress', 'done', function(err,reply) {
+			console.log('Progress: Done');
+		})
     });
 }

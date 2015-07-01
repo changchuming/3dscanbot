@@ -14,20 +14,27 @@ $(function () {
 function updateStatus(currentjob) {
 	alert(currentjob);
 	alert(jobid);
-	if (currentjob > jobid) { // Finished
-		leave('jobwatch');
-		// Do rendering
+	if (currentjob < jobid) { // In queue
+		// Display place in queue
 	} else if (currentjob == jobid) { // Ongoing
 		leave('jobwatch');
-		join('jobname');
+		join(jobname);
 		listen('progress', updateProgress);
-	} else if (currentjob < jobid){ // In queue
-		// Display place in queue
+	} else if (currentjob > jobid) { // Finishe
+		leave('jobwatch');
+		renderModel();
 	}
 }
 
 function updateProgress(data) {
-	alert(data);
+	if (data == 'done') {
+		leave(jobname);
+		renderModel();
+	}
+}
+
+function renderModel() {
+	alert('Render something!');
 }
 
 function connect() {
