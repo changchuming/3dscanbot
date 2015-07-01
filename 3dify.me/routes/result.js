@@ -11,6 +11,17 @@ var app = require('../app');
 //Display results of a reconstruction
 //##############################################################################################
 exports.display = function(req, res){
+	console.log('script run');
+	
+	// commenting out the main index page
+  	res.render('result', {
+	  	title: req.params.job
+  	});
+	
+	pyfunc.reconstruct(req.params.job);
+};
+/*
+exports.display = function(req, res){
 	// Get schedule
 	redisClient.hgetall('schedule:'+req.params.schedule, function(err, reply){
 		// If schedule invalid
@@ -30,10 +41,13 @@ exports.display = function(req, res){
         }
 	});
 };
+*/
 
 //Joins a room
 app.io.route('join', function(req) {
+	console.log(req.data);
     req.io.join(req.data);
+    app.io.room(req.data).broadcast('something', 'something');
 })
 
 // Leaves a room
