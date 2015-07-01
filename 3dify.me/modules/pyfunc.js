@@ -23,7 +23,7 @@ exports.reconstruct = function(jobname) {
     	if (dataString.indexOf("Progress: ") > -1) {
     		app.io.room(jobname).broadcast('progress', dataString);
     		redisClient.set('progress', dataString, function(err,reply) {
-    			console.log('Progress: ' + dataString);
+    			console.log(dataString);
     		})
     		//res.write(dataString);
     		//output += data;
