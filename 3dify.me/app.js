@@ -11,8 +11,6 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 // Redis, database module
 var redis = require('redis')
 redisClient = redis.createClient();
-// Kue, queueing module
-var kue = require('kue');
 // Standard stuff
 app.configure(function(){
 	  app.use(express.bodyParser());
@@ -22,10 +20,18 @@ var http = require('http');
 var path = require('path');
 
 //----------------------------------------------------------------------------------------------
+// Queue
+//----------------------------------------------------------------------------------------------
+var queue = require('./modules/queue');
+queue.initialize();
+queue.process();
+
+//----------------------------------------------------------------------------------------------
 // Routes
 //----------------------------------------------------------------------------------------------
 var index = require('./routes');
 var result = require('./routes/result');
+
 //----------------------------------------------------------------------------------------------
 // Express - All environments
 //----------------------------------------------------------------------------------------------
@@ -64,21 +70,6 @@ app.listen(app.get('port'), function(){
    console.log("Express server listening on port " + app.get('port'));
 });
 
-//----------------------------------------------------------------------------------------------
-//Create job queue - should be moved to index.js
-//----------------------------------------------------------------------------------------------
-//var jobs = kue.createQueue();
-//
-//jobs.process('reconstruction', function (job, done){
-//	 console.log('Job', job.id, 'is done');
-//	 done && done();
-//	})
-//
-//function newJob (){
-//	 var job = jobs.create('reconstruction');
-//	 job.save();
-//	}
-
 //##############################################################################################
 // Display landing page
 //##############################################################################################
@@ -98,5 +89,5 @@ app.get('/upload', index.upload)
 //##############################################################################################
 //Display result of run
 //##############################################################################################
-app.get('/:job', result.display);
+app.get('/:jobID', result.display);
 //app.get('/r/:result', result.display);

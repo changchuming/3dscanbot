@@ -7,47 +7,24 @@
 //----------------------------------------------------------------------------------------------
 var app = require('../app');
 var pyfunc = require('../modules/pyfunc');
+var queue = require('../modules/queue');
 
 //##############################################################################################
 //Display results of a reconstruction
 //##############################################################################################
 exports.display = function(req, res){
-	console.log('display');
-	
+	console.log('display ' + req.params.jobID);
 	// commenting out the main index page
   	res.render('result', {
-	  	title: req.params.job,
-	  	job: JSON.stringify(req.params.job)
+	  	title: req.params.jobID,
+	  	jobID: JSON.stringify(req.params.jobID)
   	});
-	
-	pyfunc.reconstruct(req.params.job);
+  	queue.newJob(req.params.jobID);
 };
-/*
-exports.display = function(req, res){
-	// Get schedule
-	redisClient.hgetall('schedule:'+req.params.schedule, function(err, reply){
-		// If schedule invalid
-		if (reply == null) {
-			res.render('error', {
-				error: 'Link not found'
-			});
-		}
-		// Else display results
-		else {
-            console.log(reply);
-            res.render('result', { 
-                title: '3Dify', 
-                //result: req.params.result,  
-                data: JSON.stringify(reply)
-            });
-        }
-	});
-};
-*/
 
 //Joins a room
 app.io.route('join', function(req) {
-	console.log(req.data);
+	console.log('client joined room ' + req.data);
     req.io.join(req.data);
     app.io.room(req.data).broadcast('something', 'something');
 })

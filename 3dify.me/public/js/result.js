@@ -6,9 +6,8 @@ var io;
 
 //Initialization
 $(function () {
-	alert(job);
 	connect();
-	join(job);
+	join(jobID);
 	listen('progress', function (data){
 		alert(data);
 	});
