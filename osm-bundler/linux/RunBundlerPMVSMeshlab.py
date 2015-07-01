@@ -31,9 +31,9 @@ managerpmvs.doBundle2PMVS()
 print "Progress: Generating dense point cloud..."
 managerpmvs.doPMVS()
 
+print "Progress: Files saved to %s" % manager.workDir
 # do meshlab reconstruction
 print "Progress: Reconstructing surface model based on dense point cloud..."
 subprocess.call("meshlabserver -i %s/pmvs/models/pmvs_options.txt.ply -o %s/pmvs/models/pmvs_options.txt.x3d -s /home/ubuntu/3dscanbot/meshlab/reconstruction.mlx" % (manager.workDir, manager.workDir), shell=True)
-filename=manager.workDir.split('/')
-print "Progress: Files saved to %s" % filename[0]
+#filename=manager.workDir.split('/')
 # filename[1] is randomly generated folder name
