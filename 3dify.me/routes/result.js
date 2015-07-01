@@ -41,6 +41,7 @@ app.io.route('join', function(req) {
 	if (req.data == 'jobwatch') {
 	  	redisClient.get('jobwatch', function(err, reply) {
 	  		app.io.room('jobwatch').broadcast('currentjob', reply);
+	  		console.log('Current job is ' + reply)
   		});
 	}
 	else {
