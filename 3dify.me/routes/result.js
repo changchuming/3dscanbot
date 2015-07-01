@@ -12,7 +12,7 @@ var pyfunc = require('../modules/pyfunc');
 //Display results of a reconstruction
 //##############################################################################################
 exports.display = function(req, res){
-	console.log('script run');
+	console.log('display');
 	
 	// commenting out the main index page
   	res.render('result', {

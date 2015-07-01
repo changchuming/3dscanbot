@@ -12,11 +12,13 @@ exports.reconstruct = function(job) {
     	'--photos=/home/ubuntu/3dscanbot/uploads/' + job] // parameters
     );
     
+    console.log('reconstruct');
     var output = "";
     
     python.stdout.on('data', function(data){
     	dataString = data.toString();
     	if (dataString.indexOf("ProgressPercent:") > -1) {
+    		console.log(dataString);
     		app.io.room(job).broadcast('progress', dataString);
     		//res.write(dataString);
     		//output += data;
