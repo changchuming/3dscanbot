@@ -13,6 +13,7 @@ $(function () {
 
 function updateStatus(currentjob) {
 	alert(currentjob);
+	alert(jobid);
 	if (currentjob > jobid) { // Finished
 		leave('jobwatch');
 		// Do rendering
