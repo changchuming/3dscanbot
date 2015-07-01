@@ -73,7 +73,7 @@ class OsmPmvs():
         os.mkdir("pmvs/models")
         
         #$BASE_PATH/bin32/Bundle2PMVS.exe list.txt  bundle/bundle.out
-        print "Running Bundle2PMVS to generate geometry and converted camera file"
+        #print "Running Bundle2PMVS to generate geometry and converted camera file"
         subprocess.call([bundler2PmvsExecutable, "list.txt", "bundle/bundle.out"])
 		
         # Apply radial undistortion to the images
@@ -106,10 +106,10 @@ class OsmPmvs():
     def doPMVS(self):
         print "Run PMVS2 : %s " % pmvsExecutable
         subprocess.call([pmvsExecutable, "./", "pmvs_options.txt"])
-	print "Finished! See the results in the '%s' directory" % self.workDir
+	#print "Finished! See the results in the '%s' directory" % self.workDir
 	if sys.platform == "win32": subprocess.call(["explorer", self.workDir])
 	#if sys.platform == "linux2": subprocess.call(["xdg-open", self.workDir])
-        else: print "Thanks"
+        #else: print "Thanks"
 
     def printHelpExit(self):
         self.printHelp()

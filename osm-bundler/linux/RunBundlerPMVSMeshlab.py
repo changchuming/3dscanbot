@@ -8,33 +8,31 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 # initialize OsmBundler manager class
 manager = osmbundler.OsmBundler()
-print "ProgressPercent:10"
 
+print "Progress: Preparing photos..."
 manager.preparePhotos()
-print "ProgressPercent:10"
 
+print "Progress: Matching features..."
 manager.matchFeatures()
-print "ProgressPercent:10"
 
+print "Progress: Doing bundle adjustments..."
 manager.doBundleAdjustment()
-print "ProgressPercent:10"
 
 # manager.openResult()
 
 # initialize OsmPMVS manager class
 managerpmvs = osmpmvs.OsmPmvs(manager.workDir)
-print "ProgressPercent:10"
 
 # initialize PMVS input from Bundler output
+print "Progress: Converting to PMVS format..."
 managerpmvs.doBundle2PMVS()
-print "ProgressPercent:10"
 
 # call PMVS
+print "Progress: Generating dense point clouds..."
 managerpmvs.doPMVS()
-print "ProgressPercent:10"
 
 # do meshlab reconstruction
+print "Progress: Reconstructing surface model based on point cloud..."
 subprocess.Popen("meshlabserver -i %s/pmvs/models/pmvs_options.txt.ply -o %s/pmvs/models/pmvs_options.txt.x3d -s /home/ubuntu/3dscanbot/meshlab/reconstruction.mlx" % (manager.workDir, manager.workDir), shell=True)
-print "ProgressPercent:10"
 # filename=manager.workDir.split('/')
 # filename[1] is randomly generated folder name
