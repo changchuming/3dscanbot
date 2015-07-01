@@ -27,7 +27,7 @@ console.log('index');
 //##############################################################################################
 exports.upload = function(req, res){
 	console.log('script run');
-	pyfunc.reconstruct("/home/ubuntu/3dscanbot/osm-bundler/examples/ET2", res);
+	pyfunc.reconstruct("/home/ubuntu/3dscanbot/osm-bundler/examples/ET", res);
 	//execPipe.execPipe('/home/ubuntu/3dscanbot/osm-bundler/examples/ET');
 //	var options = {
 //	  scriptPath: '/home/ubuntu/3dscanbot/osm-bundler/linux',
