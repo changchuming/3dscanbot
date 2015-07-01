@@ -3,8 +3,10 @@
  */
 
 var io;
+
 //Initialization
 $(function () {
+	alert(job);
 	connect();
 	join(job);
 	listen('progress', function (data){

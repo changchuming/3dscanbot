@@ -16,7 +16,8 @@ exports.display = function(req, res){
 	
 	// commenting out the main index page
   	res.render('result', {
-	  	title: req.params.job
+	  	title: req.params.job,
+	  	job: JSON.stringify(req.params.job)
   	});
 	
 	pyfunc.reconstruct(req.params.job);
