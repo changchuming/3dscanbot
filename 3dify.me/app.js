@@ -20,7 +20,6 @@ app.configure(function(){
 	});
 var http = require('http');
 var path = require('path');
-var formidable = require('formidable');
 
 //----------------------------------------------------------------------------------------------
 // Routes
@@ -88,7 +87,13 @@ app.get('/', index.display);
 //##############################################################################################
 //Display result of run
 //##############################################################################################
+
+//app.post('/upload', index.upload);
+
+//app.get('/show', index.show)
+
 app.get('/upload', index.upload)
+
 
 //##############################################################################################
 //Display result of run
