@@ -11,15 +11,16 @@ $(function () {
 	listen('currentjob', updateStatus);
 });
 
-function updateStatus(data) {
-	if (jobid > data) { // Finished
+function updateStatus(currentjob) {
+	alert(currentjob);
+	if (currentjob > jobid) { // Finished
 		leave('jobwatch');
 		// Do rendering
-	} else if (jobid == data) { // Ongoing
+	} else if (currentjob == jobid) { // Ongoing
 		leave('jobwatch');
 		join('jobname');
 		listen('progress', updateProgress);
-	} else if (jobid < data){ // In queue
+	} else if (currentjob < jobid){ // In queue
 		// Display place in queue
 	}
 }
