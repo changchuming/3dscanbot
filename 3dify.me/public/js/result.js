@@ -7,11 +7,26 @@ var io;
 //Initialization
 $(function () {
 	connect();
-	join(jobID);
-	listen('progress', function (data){
-		alert(data);
-	});
+	join('jobwatch');
+	listen('currentjob', updateStatus);
 });
+
+function updateStatus(data) {
+	if (jobid > data) { // Finished
+		leave('jobwatch');
+		// Do rendering
+	} else if (jobid == data) { // Ongoing
+		leave('jobwatch');
+		join('jobname');
+		listen('progress', updateProgress);
+	} else if (jobid < data){ // In queue
+		// Display place in queue
+	}
+}
+
+function updateProgress(data) {
+	alert(data);
+}
 
 function connect() {
 	io = io.connect();

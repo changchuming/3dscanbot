@@ -13,32 +13,41 @@ var queue = require('../modules/queue');
 //Display results of a reconstruction
 //##############################################################################################
 exports.display = function(req, res){
-	console.log('display ' + req.params.jobID);
-  	redisClient.hget('jobs', req.params.jobID, function(err, reply){
+	console.log('display ' + req.params.jobname);
+  	redisClient.hget('jobs', req.params.jobname, function(err, reply){
 		// If schedule invalid
 		if (reply == null) {
 			res.send('Invalid link.');
 		}
 		// Else display schedule
 		else {
-		  	redisClient.get('currentjob', function(err, reply2) {
-	  			console.log(reply);
-	  			console.log(reply2);
-	  			res.render('result', {
-	  				title: req.params.jobID,
-	  				jobID: JSON.stringify(req.params.jobID)
-	  			});
-	  		});
+  			res.render('result', {
+  				title: req.params.jobname,
+  				jobname: JSON.stringify(req.params.jobname),
+  				jobid: reply
+  			});
 		}
 	});
-  	queue.newJob(req.params.jobID);
+  	queue.newJob(req.params.jobname);
 };
+
+
 
 //Joins a room
 app.io.route('join', function(req) {
-	console.log('client joined room ' + req.data);
+	console.log('Client joined room ' + req.data);
     req.io.join(req.data);
-    app.io.room(req.data).broadcast('something', 'something');
+	// Broadcast current job
+	if (req.data == 'jobwatch') {
+	  	redisClient.get('jobwatch', function(err, reply) {
+	  		app.io.room('jobwatch').broadcast('currentjob', reply);
+  		});
+	}
+	else {
+	  	redisClient.get('progress', function(err, reply) {
+	  		app.io.room(req.data).broadcast('progress', reply);
+  		});
+	}
 })
 
 // Leaves a room

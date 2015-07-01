@@ -7,13 +7,13 @@ var child = require('child_process');
 //##############################################################################################
 // Run python reconstruction on specific job
 //##############################################################################################
-exports.reconstruct = function(jobID) {
-	console.log('reconstructing ' + jobID);
+exports.reconstruct = function(jobname) {
+	console.log('reconstructing ' + jobname);
 	python = child.spawn(
 		'python',
     	['-u' , // unbuffered output
     	'/home/ubuntu/3dscanbot/osm-bundler/linux/RunBundlerPMVSMeshlab.py', // script
-    	'--photos=/home/ubuntu/3dscanbot/uploads/' + jobID] // parameters
+    	'--photos=/home/ubuntu/3dscanbot/uploads/' + jobname] // parameters
     );
     
     var output = "";
@@ -21,8 +21,10 @@ exports.reconstruct = function(jobID) {
     python.stdout.on('data', function(data){
     	dataString = data.toString();
     	if (dataString.indexOf("Progress: ") > -1) {
-    		console.log(dataString);
-    		app.io.room(jobID).broadcast('progress', dataString);
+    		app.io.room(jobname).broadcast('progress', dataString);
+    		redisClient.set('progress', dataString, function(err,reply) {
+    			console.log('Progress: ' + dataString);
+    		})
     		//res.write(dataString);
     		//output += data;
     	}
@@ -30,10 +32,10 @@ exports.reconstruct = function(jobID) {
 	
     python.on('close', function(code){ 
     	if (code !== 0) {
-    		app.io.room(jobID).broadcast('error', code);
+    		app.io.room(jobname).broadcast('error', code);
     		//return res.send(500, code);
 		}
-		app.io.room(jobID).broadcast('success', output);
+		app.io.room(jobname).broadcast('success', output);
     	//return res.send(200, output)
     	//return res.end();
     });
