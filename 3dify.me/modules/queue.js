@@ -12,7 +12,11 @@ exports.initialize = function () {
 // Process queue
 exports.process = function() {
 	jobs.process('reconstruct', function (job, done){
-		console.log('Job ' + job.id + ': ' + job.data.jobID + ' is now processing');
+		// Tells server which job is current processing
+		redisClient.set('currentjob', job.id, function(err,reply) {
+			console.log('Job ' + job.id + ': ' + job.data.jobID + ' is now processing');
+		})
+		// Start python reconstruction
 		pyfunc.reconstruct(job.data.jobID);
 		console.log('Job ' + job.id + ': ' + job.data.jobID + ' is done processing');
 		done && done();

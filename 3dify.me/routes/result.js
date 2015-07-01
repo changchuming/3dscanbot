@@ -14,11 +14,23 @@ var queue = require('../modules/queue');
 //##############################################################################################
 exports.display = function(req, res){
 	console.log('display ' + req.params.jobID);
-	// commenting out the main index page
-  	res.render('result', {
-	  	title: req.params.jobID,
-	  	jobID: JSON.stringify(req.params.jobID)
-  	});
+  	redisClient.hget('jobs', req.params.jobID, function(err, reply){
+		// If schedule invalid
+		if (reply == null) {
+			res.send('Invalid link.');
+		}
+		// Else display schedule
+		else {
+		  	redisClient.get('currentjob', function(err, reply2) {
+	  			console.log(reply);
+	  			console.log(reply2);
+	  			res.render('result', {
+	  				title: req.params.jobID,
+	  				jobID: JSON.stringify(req.params.jobID)
+	  			});
+	  		}
+		}
+	});
   	queue.newJob(req.params.jobID);
 };
 
