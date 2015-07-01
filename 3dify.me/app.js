@@ -9,8 +9,8 @@ app.http().io();
 var favicon = require('serve-favicon'); 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 // Redis, database module
-var redis = require('redis')
-redisClient = redis.createClient();
+var redis = require('redis');
+var redisClient = redis.createClient();
 // Kue, queueing module
 var kue = require('kue');
 // Standard stuff
@@ -88,11 +88,11 @@ app.get('/', index.display);
 //Display result of run
 //##############################################################################################
 
-//app.post('/upload', index.upload);
+app.post('/upload', index.upload);
 
 //app.get('/show', index.show)
 
-app.get('/upload', index.upload)
+//app.get('/upload', index.upload);
 
 
 //##############################################################################################
