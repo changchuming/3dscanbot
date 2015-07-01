@@ -28,7 +28,7 @@ exports.display = function(req, res){
 	  				title: req.params.jobID,
 	  				jobID: JSON.stringify(req.params.jobID)
 	  			});
-	  		}
+	  		});
 		}
 	});
   	queue.newJob(req.params.jobID);
