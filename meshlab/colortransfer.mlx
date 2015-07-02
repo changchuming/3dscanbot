@@ -1,0 +1,14 @@
+<!DOCTYPE FilterScript>
+<FilterScript>
+ <filter name="Vertex Attribute Transfer">
+  <Param description="Source Mesh" name="SourceMesh" tooltip="The mesh that contains the source data that we want to transfer." type="RichMesh" value="1"/>
+  <Param description="Target Mesh" name="TargetMesh" tooltip="The mesh whose vertexes will receive the data from the source." type="RichMesh" value="0"/>
+  <Param description="Transfer Geometry" name="GeomTransfer" tooltip="if enabled, the position of each vertex of the target mesh will be snapped onto the corresponding closest point on the source mesh" type="RichBool" value="false"/>
+  <Param description="Transfer Normal" name="NormalTransfer" tooltip="if enabled, the normal of each vertex of the target mesh will get the (interpolated) normal of the corresponding closest point on the source mesh" type="RichBool" value="false"/>
+  <Param description="Transfer Color" name="ColorTransfer" tooltip="if enabled, the color of each vertex of the target mesh will become the color of the corresponding closest point on the source mesh" type="RichBool" value="true"/>
+  <Param description="Transfer quality" name="QualityTransfer" tooltip="if enabled, the quality of each vertex of the target mesh will become the quality of the corresponding closest point on the source mesh" type="RichBool" value="false"/>
+  <Param description="Transfer Selection" name="SelectionTransfer" tooltip="if enabled,  each vertex of the target mesh will be selected if the corresponding closest point on the source mesh falls in a selected face" type="RichBool" value="false"/>
+  <Param description="Store dist. as quality" name="QualityDistance" tooltip="if enabled, we store the distance of the transferred value as in the vertex quality" type="RichBool" value="false"/>
+  <Param description="Max Dist Search" name="UpperBound" tooltip="Sample points for which we do not find anything whithin this distance are rejected and not considered for recovering attributes." min="0" max="4.30328" type="RichAbsPerc" value="0.086066"/>
+ </filter>
+</FilterScript>
