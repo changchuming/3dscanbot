@@ -13,7 +13,7 @@ exports.reconstruct = function(jobname) {
 		'python',
     	['-u' , // unbuffered output
     	'/home/ubuntu/3dscanbot/osm-bundler/linux/RunBundlerPMVSMeshlab.py', // script
-    	'--photos=/home/ubuntu/3dscanbot/uploads/' + jobname] // parameters
+    	'--photos=/home/ubuntu/3dscanbot/3dify.me/public/uploads/' + jobname] // parameters
     );
     
     var output = "";
