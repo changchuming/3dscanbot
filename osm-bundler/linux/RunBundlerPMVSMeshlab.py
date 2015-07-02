@@ -37,7 +37,7 @@ print "Progress: Reconstructing surface model based on dense point cloud..."
 #subprocess.call("meshlabserver -i %s/pmvs/models/pmvs_options.txt.ply -o %s/pmvs/models/pointcloud.x3d -s /home/ubuntu/3dscanbot/meshlab/empty.mlx" % (manager.workDir, manager.workDir), shell=True)
 subprocess.call("meshlabserver -i %s/pmvs/models/pmvs_options.txt.ply -o %s/pmvs/models/model.x3d -s /home/ubuntu/3dscanbot/meshlab/reconstruction.mlx" % (manager.workDir, manager.workDir), shell=True)
 
-shutil.copy2('%s/pmvs/models/pmvs_options.txt.ply' % manager.workDir, '/home/ubuntu/3dscanbot/uploads/%s' % os.path.basename(manager.photosArg) + 'pointcloud.ply')
+shutil.copy2('%s/pmvs/models/pmvs_options.txt.ply' % manager.workDir, '/home/ubuntu/3dscanbot/uploads/%s' % os.path.basename(manager.photosArg) + '/pointcloud.ply')
 shutil.copy2('%s/pmvs/models/model.x3d' % manager.workDir, '/home/ubuntu/3dscanbot/uploads/%s' % os.path.basename(manager.photosArg))
 print "Progress: Files saved to /home/ubuntu/3dscanbot/uploads/%s" % os.path.basename(manager.photosArg)
 #filename=manager.workDir.split('/')
