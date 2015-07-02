@@ -25,7 +25,8 @@ exports.display = function(req, res){
   			res.render('result', {
   				title: req.params.jobname,
   				jobname: JSON.stringify(req.params.jobname),
-  				jobid: reply
+  				jobid: reply,
+  				modelname: req.params.jobname
   			});
 		}
 	});
