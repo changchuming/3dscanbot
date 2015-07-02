@@ -7,7 +7,7 @@ var child = require('child_process');
 //##############################################################################################
 // Run python reconstruction on specific job
 //##############################################################################################
-exports.reconstruct = function(jobname) {
+exports.reconstruct = function(jobname, done) {
 	console.log('reconstructing ' + jobname);
 	python = child.spawn(
 		'python',
@@ -37,6 +37,7 @@ exports.reconstruct = function(jobname) {
 		app.io.room(jobname).broadcast('progress', 'done');
 		redisClient.set('progress', 'done', function(err,reply) {
 			console.log('Progress: Done');
+			done();
 		})
     });
 }

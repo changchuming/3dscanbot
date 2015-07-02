@@ -17,9 +17,7 @@ exports.process = function() {
 			console.log('Job ' + job.id + ': ' + job.data.jobname + ' is now processing');
 		})
 		// Start python reconstruction
-		pyfunc.reconstruct(job.data.jobname);
-		console.log('Job ' + job.id + ': ' + job.data.jobname + ' is done processing');
-		done && done();
+		pyfunc.reconstruct(job.data.jobname, done);
 	})
 }
 
