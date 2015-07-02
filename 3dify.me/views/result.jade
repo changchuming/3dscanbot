@@ -7,7 +7,7 @@ block content
     .main-body
       x3d(width='800px', height='800px')
         scene
-          inline(url='/uploads/' + jobname + '/coloredmodel.x3d')
+          inline(url='/uploads/' + !{jobname} + '/coloredmodel.x3d')
 block footer
   .footer.text-center
     p Copyright © 3Dify.me
