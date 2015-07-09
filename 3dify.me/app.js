@@ -89,5 +89,5 @@ app.get('/upload', index.upload)
 //##############################################################################################
 //Display result of run
 //##############################################################################################
-app.get('/:jobname', result.display);
+app.get('/r/:jobname', result.display);
 //app.get('/r/:result', result.display);
