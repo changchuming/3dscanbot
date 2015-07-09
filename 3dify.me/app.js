@@ -31,6 +31,7 @@ queue.process();
 //----------------------------------------------------------------------------------------------
 var index = require('./routes');
 var result = require('./routes/result');
+var pi = require('./routes/pi');
 
 //----------------------------------------------------------------------------------------------
 // Express - All environments
@@ -70,6 +71,22 @@ app.listen(app.get('port'), function(){
    console.log("Express server listening on port " + app.get('port'));
 });
 
+//----------------------------------------------------------------------------------------------
+// Socket routes
+//----------------------------------------------------------------------------------------------
+
+//Joins a room
+app.io.route('join', function(req) {
+	console.log('Client joined room ' + req.data);
+	result.callback(req);
+	pi.callback(req);
+})
+
+// Leaves a room
+app.io.route('leave', function(req) {
+    req.io.leave(req.data);
+})
+
 //##############################################################################################
 // Display landing page
 //##############################################################################################
@@ -89,5 +106,5 @@ app.get('/upload', index.upload)
 //##############################################################################################
 //Display result of run
 //##############################################################################################
-app.get('/r/:jobname', result.display);
+app.get('/:jobname', result.display);
 //app.get('/r/:result', result.display);

@@ -1,5 +1,5 @@
 /*
- * GET the result of a schedule.
+ * GET the result of a job.
  */
 
 //----------------------------------------------------------------------------------------------
@@ -32,32 +32,22 @@ exports.display = function(req, res){
 	});
 };
 
-
-
-//Joins a room
-app.io.route('join', function(req) {
-	console.log('Client joined room ' + req.data);
+exports.callback = function(req) {
     req.io.join(req.data);
 	// Broadcast current job
-	if (req.data == 'jobwatch') {
+	if (req.data == 'resultwatch') {
 	  	redisClient.get('currentjob', function(err, reply) {
-	  		app.io.room('jobwatch').broadcast('currentjob', reply);
+	  		app.io.room('resultwatch').broadcast('currentjob', reply);
 	  		console.log('Current job is ' + reply)
   		});
 	}
-	else {
-	  	redisClient.get('progress', function(err, reply) {
-	  		app.io.room(req.data).broadcast('progress', reply);
+	else if (req.data == 'resultwatch') {
+	  	redisClient.get('currentprogress', function(err, reply) {
+	  		app.io.room('resultwatch').broadcast('currentprogress', reply);
   		});
 	}
-})
-
-// Leaves a room
-app.io.route('leave', function(req) {
-    req.io.leave(req.data);
-})
-
-
+}
+	
 // broadcasts to a room
 var broadcastResult = function(result) {
     // Get something then broadcasts it
