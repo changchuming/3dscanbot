@@ -21,8 +21,8 @@ exports.reconstruct = function(jobname, done) {
     python.stdout.on('data', function(data){
     	dataString = data.toString();
     	if (dataString.indexOf("Progress: ") > -1) {
-    		app.io.room(jobname).broadcast('progress', dataString);
-    		redisClient.set('progress', dataString, function(err,reply) {
+    		app.io.room('resultwatch').broadcast('currentprogress', dataString);
+    		redisClient.set('currentprogress', dataString, function(err,reply) {
     			console.log(dataString);
     		})
     		//res.write(dataString);
@@ -32,10 +32,10 @@ exports.reconstruct = function(jobname, done) {
 	
     python.on('close', function(code){ 
     	if (code !== 0) {
-    		app.io.room(jobname).broadcast('error', code);
+    		app.io.room('resultwatch').broadcast('error', code);
 		}
-		app.io.room(jobname).broadcast('progress', 'done');
-		redisClient.set('progress', 'done', function(err,reply) {
+		app.io.room('resultwatch').broadcast('currentprogress', 'done');
+		redisClient.set('currentprogress', 'done', function(err,reply) {
 			console.log('Progress: Done');
 			done();
 		})

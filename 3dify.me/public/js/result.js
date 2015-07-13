@@ -7,7 +7,7 @@ var io;
 //Initialization
 $(function () {
 	connect();
-	join('jobwatch');
+	join('resultwatch');
 	listen('currentjob', updateStatus);
 });
 
@@ -17,18 +17,18 @@ function updateStatus(currentjob) {
 	if (currentjob < jobid) { // In queue
 		// Display place in queue
 	} else if (currentjob == jobid) { // Ongoing
-		leave('jobwatch');
-		join(jobname);
-		listen('progress', updateProgress);
+		stop('currentjob');
+		listen('currentprogress', updateProgress);
 	} else if (currentjob > jobid) { // Finishe
-		leave('jobwatch');
+		leave('resultwatch');
 		renderModel();
 	}
 }
 
 function updateProgress(data) {
 	if (data == 'done') {
-		leave(jobname);
+		stop('currentprogress');
+		leave('resultwatch');
 		renderModel();
 	}
 }
