@@ -20,6 +20,8 @@ app.configure(function(){
 	});
 var http = require('http');
 var path = require('path');
+var multer  = require('multer');
+var done = false;
 
 //----------------------------------------------------------------------------------------------
 // Routes
@@ -39,7 +41,18 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(multer({ dest: './uploads/',
+ rename: function (fieldname, filename) {
+    return filename+Date.now();
+  },
+onFileUploadStart: function (file) {
+  console.log(file.originalname + ' is starting ...');
+},
+onFileUploadComplete: function (file) {
+  console.log(file.fieldname + ' uploaded to  ' + file.path);
+  done=true;
+}
+}));
 //----------------------------------------------------------------------------------------------
 // Development only
 //----------------------------------------------------------------------------------------------
@@ -88,7 +101,18 @@ app.get('/', index.display);
 //Display result of run
 //##############################################################################################
 
-app.post('/upload', index.upload);
+app.post('/api/photo',function(req,res){
+  if(done==true){
+    console.log(req.files);
+    res.end("File uploaded.");
+  }
+});
+
+app.listen(44444,function(){
+    console.log("Working on port 44444");
+});
+
+//app.post('/upload', index.upload);
 
 //app.get('/show', index.show)
 
