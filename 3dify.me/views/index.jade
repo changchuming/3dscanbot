@@ -1,20 +1,16 @@
 extends layout
-    
+
+block styles
 block content
-  header.intro
-    .intro-body
+  .main
+    .main-body
       .container
         .row
           .col-md-8.col-md-offset-2
-            br
-            br
-            br
-            br
-            br
-            br
             h1.brand-heading 3Dify.me
             p.intro-text
               textarea#comment.form-control(rows='2')
+              
               br
               a.btn.btn-primary Upload Photos
               
@@ -44,4 +40,3 @@ block content
               br
       .container.text-center
         p Copyright © 3Dify.me
-
