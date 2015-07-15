@@ -18,11 +18,13 @@ exports.reconstruct = function(iid, done) {
     var output = "";
     
     python.stdout.on('data', function(data){
-    	dataString = data.toString();
-    	if (dataString.indexOf("Progress: ") > -1) {
-    		app.io.room('resultwatch').broadcast('currentprogress', dataString);
-    		redisClient.set('currentprogress', dataString, function(err,reply) {
-    			console.log(dataString);
+    	progressString = data.toString();
+    	if (progressString.indexOf("###") > -1) {
+    		progressString.replace('#','');
+    		progressNum = parseInt(progressString);
+    		app.io.room('resultwatch').broadcast('currentprogress', progressNum);
+    		redisClient.set('currentprogress', progressNum, function(err,reply) {
+    			console.log(progressNum);
     		})
     		//res.write(dataString);
     		//output += data;
