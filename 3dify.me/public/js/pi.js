@@ -103,7 +103,7 @@ function piVM(data) {
     this.picArray = ko.observableArray();
     this.hasJob = ko.observable(false);
     
-    this.setIID(iid) {
+    this.setIID = function(iid){
     	this.iID = iid;
     }
     
