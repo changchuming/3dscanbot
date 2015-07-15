@@ -112,6 +112,11 @@ app.io.route('removepic', function(req) {
     pi.removepic(req);
 })
 
+// Remove picture from database
+app.io.route('processjob', function(req) {
+    pi.processjob(req);
+})
+
 // Halt / shutdown a pi
 app.io.route('pihalt', function (req) {
 	pi.pihalt(req);

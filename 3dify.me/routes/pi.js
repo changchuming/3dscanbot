@@ -42,7 +42,7 @@ exports.newjob = function(req) {
 		}
 		fs.mkdir('public/uploads/'+iid); // Make uploads folder for this job
 		redisClient.set('lastiid', iid, function (err, reply) {}); // Update last iid
-		app.io.room('piid'+req.data).broadcast('setiid', iid);
+		app.io.room('piid'+req.data).broadcast('setiid', {piid: req.data, iid: iid});
 	});
 }
 
@@ -60,6 +60,11 @@ exports.removepic = function(req) {
 	} catch (ex) {
 		console.log(ex);
 	}
+}
+
+// Process a job based on its internal id
+exports.processjob = function(req) {
+	queue.newJob(req.data);
 }
 
 exports.pijoin = function(req) {
