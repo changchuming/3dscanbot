@@ -95,7 +95,7 @@ function piVM(data) {
 
     }
 
-    this.takePic = function(data){
+    this.takePic = function(){
     	io.emit('takepic', this.piID());
     	this.addPic('http://www.hpl.hp.com/research/info_theory/AlbertWeb/fullsize/B)%20Corrupted%20by%20random%20noise,%20bit%20error%20rate%3D0.020.gif')
     }
@@ -107,6 +107,10 @@ function piVM(data) {
     this.removePic = function(url) {
     	io.emit('removepic', url);
     	this.picArray.remove(function(pic) {return pic.url() == url});
+    }
+    
+    this.piHalt = function() {
+    	io.emit('pihalt', this.piID());
     }
 
     this.fullName = ko.computed(function() {

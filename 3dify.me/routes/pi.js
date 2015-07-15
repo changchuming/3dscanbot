@@ -76,10 +76,11 @@ exports.pijoin = function(req) {
 	});
 }
 
-exports.pileave = function(req) {
+exports.pihalt = function(req) {
 	redisClient.hdel('pis', req.data, function(err, reply) {
 		console.log('Pi ' + req.data + ' left');
 	});
+	app.io.room('piid' + req.data).broadcast('pihalt'); // Tell pi to shutdown
 	req.io.leave('piid' + req.data);
 	app.io.room('piwatch').broadcast('pileave', req.data); // Tell clients to delete pi
 }

@@ -92,11 +92,6 @@ app.io.route('pijoin', function(req) {
     pi.pijoin(req);
 })
 
-// Special case when pi leaves
-app.io.route('pileave', function(req) {
-    pi.pileave(req);
-})
-
 // Set new job with iid for pi
 app.io.route('newjob', function(req) {
     pi.newjob(req);
@@ -114,10 +109,15 @@ app.io.route('addpic', function(req) {
 
 // Remove picture from database
 app.io.route('removepic', function(req) {
-    pi.takepic(req);
+    pi.removepic(req);
 })
 
-// Remove picture from database
+// Halt / shutdown a pi
+app.io.route('pihalt', function (req) {
+	pi.pihalt(req);
+})
+
+// Show connected pi's ip
 app.io.route('piip', function(req) {
     console.log(req.data);
 })

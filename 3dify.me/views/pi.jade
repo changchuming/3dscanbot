@@ -17,6 +17,7 @@ block content
                   button.btn.btn-danger(type='button' data-bind='enable: hasJob(), click: discardJob') Discard
                   button.btn.btn-warning(type='button' data-bind='enable: hasJob(), click: takePic') Snap
                   button.btn.btn-success(type='button' data-bind='enable: hasJob(), click: processJob') Process
+                  button.btn.btn-danger(type='button' data-bind='click: piHalt') Shutdown
             .panel-body(data-bind='visible: hasJob()')
               .row(data-bind='foreach: picArray')
                 .col-xs-4.col-sm-1.col-lg-2
