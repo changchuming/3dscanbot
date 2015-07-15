@@ -13,7 +13,6 @@ var queue = require('../modules/queue');
 // Display results of a reconstruction
 //##############################################################################################
 exports.display = function(req, res){
-	//queue.newJob(req.params.jobid);
   	redisClient.hget('jobs', req.params.jobid, function(err, reply){
 		// If schedule invalid
 		if (reply == null) {
@@ -22,10 +21,10 @@ exports.display = function(req, res){
 		// Else display schedule
 		else {
   			res.render('result', {
-  				title: req.params.iid,
-  				iid: JSON.stringify(req.params.iid),
-  				jobid: reply,
-  				modelname: req.params.iid
+  				title: reply,
+  				iid: JSON.stringify(reply),
+  				jobid: req.params.jobid,
+  				modelname: reply
   			});
 		}
 	});

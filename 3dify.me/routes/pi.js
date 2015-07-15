@@ -32,6 +32,9 @@ exports.joincb = function(room) {
 	}
 }
 
+//##############################################################################################
+// Client calls for new job and server pushes to pi
+//##############################################################################################
 exports.newjob = function(req) {
 	var iid;
 	redisClient.get('lastiid', function(err, reply) {
@@ -46,14 +49,23 @@ exports.newjob = function(req) {
 	});
 }
 
+//##############################################################################################
+// Client calls for new pic and server pushes to pi
+//##############################################################################################
 exports.takepic = function(req) {
 	app.io.room('piid'+req.data).broadcast('takepic');
 }
 
+//##############################################################################################
+// Pi calls add pic and server pushes to client
+//##############################################################################################
 exports.addpic = function(req) {
 	app.io.room('piid'+req.data.piid).broadcast('addpic', req.data);
 }
 
+//##############################################################################################
+// Client calls remove pic and server removes pic
+//##############################################################################################
 exports.removepic = function(req) {
 	try {
 		fs.unlinkSync('public/'+req.data);
@@ -62,11 +74,16 @@ exports.removepic = function(req) {
 	}
 }
 
-// Process a job based on its internal id
+//##############################################################################################
+// Client calls for processing job using iid and server processes
+//##############################################################################################
 exports.processjob = function(req) {
 	queue.newJob(req.data);
 }
 
+//##############################################################################################
+// Pi joins server and server pushes to client
+//##############################################################################################
 exports.pijoin = function(req) {
 	redisClient.get('lastpiid', function(err, reply) {
 		var piid;
@@ -85,6 +102,9 @@ exports.pijoin = function(req) {
 	});
 }
 
+//##############################################################################################
+// Pi disconnects or client calls disconnect; server pushes to pi and client
+//##############################################################################################
 exports.pihalt = function(req) {
 	redisClient.hdel('pis', req.data, function(err, reply) {
 		console.log('Pi ' + req.data + ' left');
