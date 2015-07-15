@@ -7,13 +7,12 @@ var child = require('child_process');
 //##############################################################################################
 // Run python reconstruction on specific job
 //##############################################################################################
-exports.reconstruct = function(jobname, done) {
-	console.log('reconstructing ' + jobname);
+exports.reconstruct = function(iid, done) {
 	python = child.spawn(
 		'python',
     	['-u' , // unbuffered output
     	'/home/ubuntu/3dscanbot/osm-bundler/linux/RunBundlerPMVSMeshlab.py', // script
-    	'--photos=/home/ubuntu/3dscanbot/3dify.me/public/uploads/' + jobname] // parameters
+    	'--photos=/home/ubuntu/3dscanbot/3dify.me/public/uploads/' + iid] // parameters
     );
     
     var output = "";

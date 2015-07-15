@@ -16,9 +16,6 @@ var photoUploader = require('../modules/photouploader');
 // Display home page
 //##############################################################################################
 exports.display = function(req, res){
-
-	console.log('index');
-  	
   	// commenting out the main index page
   	res.render('index', {
 	  	title: '3Dify'
