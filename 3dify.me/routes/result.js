@@ -22,7 +22,7 @@ exports.display = function(req, res){
 		else {
   			res.render('result', {
   				title: reply,
-  				iid: JSON.stringify(reply),
+  				iid: reply,
   				jobid: req.params.jobid,
   				modelname: reply
   			});
