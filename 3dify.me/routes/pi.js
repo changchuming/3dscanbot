@@ -51,12 +51,15 @@ exports.takepic = function(req) {
 }
 
 exports.addpic = function(req) {
-	console.log(req.data.piid);
 	app.io.room('piid'+req.data.piid).broadcast('addpic', req.data);
 }
 
 exports.removepic = function(req) {
-	fs.unlinkSync('public/uploads/'+req.data);
+	try {
+		fs.unlinkSync('public/'+req.data);
+	} catch (ex) {
+		console.log(ex);
+	}
 }
 
 exports.pijoin = function(req) {
