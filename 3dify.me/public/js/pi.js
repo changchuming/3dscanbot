@@ -57,6 +57,11 @@ function removePi(data) {
 	currentPiArrayVM.removePiVM(data);
 }
 
+// Add picture to specific pi
+function addPic(url, addPiVM) {
+	addPiVM.picArray.push(new picVM(url, addPiVM));
+}
+
 // View model for array of pis
 function piArrayVM() {
 	this.piArray = ko.observableArray();
@@ -82,7 +87,7 @@ function piVM(data) {
 		io.emit('newjob', this.piID()); // Requests server for a new job
 		join('piid'+this.piID()); // Join pi room
 		io.on('piid' + this.piID() + 'addpic', function(url) {
-			this.addPic(url);
+			addPic(url, this);
 		})
 		//listen('piid' + this.piID() + 'addpic', this.addPic);
 		listen('piid' + this.piID() + 'removepic', this.removePic);
@@ -101,10 +106,6 @@ function piVM(data) {
     this.takePic = function(){
     	io.emit('takepic', this.piID());
     	this.addPic('../img/intro-bg.jpg')
-    }
-    
-    this.addPic = function(url) {
-    	this.picArray.push(new picVM(url, this));
     }
 
     this.removePic = function(url) {
