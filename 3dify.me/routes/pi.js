@@ -52,7 +52,7 @@ exports.takepic = function(req) {
 
 exports.addpic = function(req) {
 	console.log(req.data.piid);
-	app.io.room('piid'+req.data.piid).broadcast('piid'+req.data.piid+'addpic', req.data.url);
+	app.io.room('piid'+req.data.piid).broadcast('addpic', req.data);
 }
 
 exports.removepic = function(req) {

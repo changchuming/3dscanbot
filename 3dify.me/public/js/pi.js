@@ -13,6 +13,7 @@ $(function () {
 	join('piwatch');
 	listen('pijoin', addPi);
 	listen('pileave', removePi);
+	listen('addpic', addPic);
 	// Add all existing pis
 	for (var piid in pis) {
 		addPi({piid: piid, piname: pis[piid]});
@@ -58,11 +59,17 @@ function removePi(data) {
 }
 
 // Add picture to specific pi
-function addPic(url, addPiVM) {
-	addPiVM.picArray.push(new picVM(url, addPiVM));
+function addPic(data) {
+	ko.utils.arrayForEach(currentPiArrayVM(), function(eachPiVM) {
+        if (eachPiVM.piid == data.piid) {
+        	eachPiVM.addPic(data.url);
+        }
+    });
 }
 
+//##############################################################################################
 // View model for array of pis
+//##############################################################################################
 function piArrayVM() {
 	this.piArray = ko.observableArray();
 	// Add pi
@@ -75,7 +82,9 @@ function piArrayVM() {
 	}
 }
 
+//##############################################################################################
 // View model for pi
+//##############################################################################################
 function piVM(data) {
     this.piID = ko.observable(data.piid);
     this.piName = ko.observable(data.piname);
@@ -86,11 +95,6 @@ function piVM(data) {
     	this.hasJob(true);
 		io.emit('newjob', this.piID()); // Requests server for a new job
 		join('piid'+this.piID()); // Join pi room
-		io.on('piid' + this.piID() + 'addpic', function(url) {
-			addPic(url, this);
-		})
-		//listen('piid' + this.piID() + 'addpic', this.addPic);
-		listen('piid' + this.piID() + 'removepic', this.removePic);
     }
 
     this.discardJob = function() {
@@ -105,7 +109,11 @@ function piVM(data) {
 
     this.takePic = function(){
     	io.emit('takepic', this.piID());
-    	this.addPic('../img/intro-bg.jpg')
+    	//this.addPic('../img/intro-bg.jpg')
+    }
+    
+    this.addPic = function(url) {
+    	this.picArray.push(new picVM(url, this));
     }
 
     this.removePic = function(url) {
@@ -122,7 +130,9 @@ function piVM(data) {
     }, this);
 }
 
+//##############################################################################################
 // View model for each picture
+//##############################################################################################
 function picVM(data, vm) {
 	this.url = ko.observable(data);
 	this.piVM = vm;
