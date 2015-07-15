@@ -50,7 +50,7 @@ exports.takepic = function(req) {
 	app.io.room('piid'+req.data).broadcast('takepic');
 }
 
-exports.takepic = function(req) {
+exports.addpic = function(req) {
 	app.io.room('piid'+req.data.piid).broadcast('addpic', req.data.url);
 }
 

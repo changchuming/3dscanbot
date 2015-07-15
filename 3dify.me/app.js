@@ -102,9 +102,9 @@ app.io.route('takepic', function(req) {
     pi.takepic(req);
 })
 
-// Asks a certain pi to take a picture
+// Asks a certain pi to add a picture
 app.io.route('addpic', function(req) {
-    pi.takepic(req);
+    pi.addpic(req);
 })
 
 // Remove picture from database
