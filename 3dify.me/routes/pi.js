@@ -56,7 +56,7 @@ exports.addpic = function(req) {
 }
 
 exports.removepic = function(req) {
-	// removepic with url req.data
+	fs.unlinkSync('public/uploads/'+req.data);
 }
 
 exports.pijoin = function(req) {

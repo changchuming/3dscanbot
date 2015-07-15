@@ -60,8 +60,9 @@ function removePi(data) {
 
 // Add picture to specific pi
 function addPic(data) {
-	ko.utils.arrayForEach(currentPiArrayVM(), function(eachPiVM) {
-        if (eachPiVM.piid == data.piid) {
+	console.log(data);
+	ko.utils.arrayForEach(currentPiArrayVM.piArray(), function(eachPiVM) {
+        if (eachPiVM.piID() == data.piid) {
         	eachPiVM.addPic(data.url);
         }
     });
