@@ -1,0 +1,61 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'meshlabserver' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 verbose cache add [ 'meshlabserver', null ]
+5 verbose cache add name=undefined spec="meshlabserver" args=["meshlabserver",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'meshlabserver',
+6 verbose parsed url   path: 'meshlabserver',
+6 verbose parsed url   href: 'meshlabserver' }
+7 silly lockFile 1ff8a651-meshlabserver meshlabserver
+8 verbose lock meshlabserver /home/ubuntu/.npm/1ff8a651-meshlabserver.lock
+9 silly lockFile 1ff8a651-meshlabserver meshlabserver
+10 silly lockFile 1ff8a651-meshlabserver meshlabserver
+11 verbose addNamed [ 'meshlabserver', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 82ccd5e8-meshlabserver meshlabserver@
+14 verbose lock meshlabserver@ /home/ubuntu/.npm/82ccd5e8-meshlabserver.lock
+15 silly addNameRange { name: 'meshlabserver', range: '*', hasData: false }
+16 verbose url raw meshlabserver
+17 verbose url resolving [ 'https://registry.npmjs.org/', './meshlabserver' ]
+18 verbose url resolved https://registry.npmjs.org/meshlabserver
+19 info trying registry request attempt 1 at 15:59:31
+20 http GET https://registry.npmjs.org/meshlabserver
+21 http 404 https://registry.npmjs.org/meshlabserver
+22 silly registry.get cb [ 404,
+22 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+22 silly registry.get     'content-type': 'application/json',
+22 silly registry.get     'cache-control': 'max-age=0',
+22 silly registry.get     'content-length': '51',
+22 silly registry.get     'accept-ranges': 'bytes',
+22 silly registry.get     date: 'Thu, 02 Jul 2015 15:59:33 GMT',
+22 silly registry.get     via: '1.1 varnish',
+22 silly registry.get     age: '0',
+22 silly registry.get     connection: 'keep-alive',
+22 silly registry.get     'x-served-by': 'cache-sin6920-SIN',
+22 silly registry.get     'x-cache': 'MISS',
+22 silly registry.get     'x-cache-hits': '0',
+22 silly registry.get     'x-timer': 'S1435852772.895098,VS0,VE1030' } ]
+23 silly lockFile 82ccd5e8-meshlabserver meshlabserver@
+24 silly lockFile 82ccd5e8-meshlabserver meshlabserver@
+25 error 404 'meshlabserver' is not in the npm registry.
+25 error 404 You should bug the author to publish it
+25 error 404
+25 error 404 Note that you can also install from a
+25 error 404 tarball, folder, or http url, or git url.
+26 error System Linux 3.13.0-53-generic
+27 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "meshlabserver"
+28 error cwd /home/ubuntu/3dscanbot/osm-bundler/linux
+29 error node -v v0.10.25
+30 error npm -v 1.3.10
+31 error code E404
+32 verbose exit [ 1, true ]

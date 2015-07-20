@@ -9,7 +9,8 @@ body {
     height: 93%;
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
-    background: url(../img/intro-bg.jpg) no-repeat bottom center scroll;
+    background: url(../img/intro-bg.jpg) repeat bottom center;
+    background-attachment: fixed;
     background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;

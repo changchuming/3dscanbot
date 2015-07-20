@@ -10,33 +10,13 @@ block content
             h1.brand-heading 3Dify.me
             p.intro-text
               textarea#comment.form-control(rows='2')
-              
-              br
-              a.btn.btn-primary Upload Photos
-              
-              input#fileupload(type='file', name='files[]', data-url='/upload', multiple='multiple')
-              
-              script.
-                $(function () {
-                  $('#fileupload').fileupload({
-                    dataType: 'jpeg',
-                    done: function (e, data) {
-                      $.each(data.result.files, function (index, file) {
-                        $('<p/>').text(file.name).appendTo(document.body);
-                      });
-                    }
-                  });
-                });
-                
-              html
-                body
-                  form#uploadForm(enctype='multipart/form-data', action='/api/photo', method='post')
-                    input(type='file', name='userPhoto')
-                    input(type='submit', value='Upload Image', name='submit')
-                
-              br
-              br
-              br
-              br
-      .container.text-center
-        p Copyright © 3Dify.me
+              | Upload photos
+              | Upload photos
+              | Upload photos
+              | Upload photos
+              | Upload photos
+              | Upload photos
+              | Upload photos
+              | Upload photos
+              | Upload photos
+block footer

@@ -92,9 +92,9 @@ app.listen(app.get('port'), function(){
 
 //Joins a room
 app.io.route('join', function(req) {
-	console.log('Client joined room ' + req.data);
-	result.callback(req);
-	pi.callback(req);
+    req.io.join(req.data);
+	result.joincb(req.data);
+	pi.joincb(req.data);
 })
 
 // Leaves a room
@@ -102,15 +102,57 @@ app.io.route('leave', function(req) {
     req.io.leave(req.data);
 })
 
+// Special case when pi connects
+app.io.route('pijoin', function(req) {
+    pi.pijoin(req);
+})
+
+// Set new job with iid for pi
+app.io.route('newjob', function(req) {
+    pi.newjob(req);
+})
+
+// Asks a certain pi to take a picture
+app.io.route('takepic', function(req) {
+    pi.takepic(req);
+})
+
+// Asks a certain pi to add a picture
+app.io.route('addpic', function(req) {
+    pi.addpic(req);
+})
+
+// Remove picture from database
+app.io.route('removepic', function(req) {
+    pi.removepic(req);
+})
+
+// Remove picture from database
+app.io.route('processjob', function(req) {
+    pi.processjob(req);
+})
+
+// Halt / shutdown a pi
+app.io.route('pihalt', function (req) {
+	pi.pihalt(req);
+})
+
+// Show connected pi's ip
+app.io.route('piip', function(req) {
+    console.log(req.data);
+})
+
 //##############################################################################################
 // Display landing page
 //##############################################################################################
 app.get('/', index.display);
+app.get('/upload', index.upload);
 
 //##############################################################################################
-//Display result of run
+// Display pi landing page
 //##############################################################################################
 
+/*
 app.post('/api/photo',function(req,res){
   if(done==true){
     console.log(req.files);
@@ -127,10 +169,19 @@ app.listen(44444,function(){
 //app.get('/show', index.show)
 
 //app.get('/upload', index.upload);
+*/
 
+app.get('/pi', pi.display);
 
 //##############################################################################################
-//Display result of run
+// Display result of run
 //##############################################################################################
+
+/*
 app.get('/:jobname', result.display);
 //app.get('/r/:result', result.display);
+
+*/
+
+app.get('/:jobid', result.display);
+

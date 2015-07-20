@@ -9,14 +9,13 @@ block content
         scene
           inline(url='/uploads/' + modelname + '/coloredmodel.x3d')
 block footer
-  .footer.text-center
-    p Copyright © 3Dify.me
 block scripts
   // Server variables
   script.
-    var jobname = !{jobname}
+    var iid = !{iid}
     var jobid = !{jobid}
-  // Socket.io
+  // x3dom to display 3d models
   script(src='http://www.x3dom.org/download/x3dom.js', type='text/javascript')
+  // Socket.io
   script(src='/socket.io/socket.io.js', type='text/javascript')
   script(src='js/result.js')

@@ -1,0 +1,36 @@
+extends layout
+
+block styles
+  link(rel='stylesheet', type='text/css', href='http://www.x3dom.org/download/x3dom.css')
+  link(rel='stylesheet', type='text/css', href='/css/pi.css')
+block content
+  .main
+    .main-body
+      .container
+        .row(data-bind='foreach: piArray')
+          .panel.panel-success
+            .panel-heading
+              .input-group
+                h1.panel-title.capitalized-header(data-bind='text: piName')
+                span.input-group-btn
+                  button.btn.btn-success(type='button' data-bind='enable: !hasJob(), click: newJob') New
+                  button.btn.btn-danger(type='button' data-bind='enable: hasJob(), click: discardJob') Discard
+                  button.btn.btn-warning(type='button' data-bind='enable: hasJob(), click: takePic') Snap
+                  button.btn.btn-success(type='button' data-bind='enable: hasJob(), click: processJob') Process
+                  button.btn.btn-danger(type='button' data-bind='click: piHalt') Shutdown
+            .panel-body(data-bind='visible: hasJob()')
+              .row(data-bind='foreach: picArray')
+                .col-xs-4.col-sm-1.col-lg-2
+                  a.thumbnail(href='#', data-bind='click: removePic')
+                    .caption
+                      .caption-content
+                        i.fa.fa-times.fa-2x
+                    img(data-bind='attr: { src: url }', alt='Generic placeholder thumbnail')
+block footer
+block scripts
+  // Server variables
+  script.
+    var pis = !{pis}
+  // Socket.io
+  script(src='/socket.io/socket.io.js', type='text/javascript')
+  script(src='js/pi.js')

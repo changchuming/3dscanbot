@@ -3,12 +3,16 @@
  */
 
 var io;
+var currentStatusVM;
 
 //Initialization
 $(function () {
 	connect();
 	join('resultwatch');
 	listen('currentjob', updateStatus);
+	currentStatusVM = new statusVM();
+	// Activates knockout.js
+	ko.applyBindings(currentStatusVM);
 });
 
 function updateStatus(currentjob) {
@@ -61,4 +65,8 @@ function listen(event, callback) {
 // Stop listening for event
 function stop(event, callback) {
 	io.removeListener(event, callback);
+}
+
+function statusVM() {
+	this.currentStatus = ko.observable('Getting status...');
 }
