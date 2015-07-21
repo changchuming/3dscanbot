@@ -19,4 +19,13 @@ block content
               | Upload photos
               | Upload photos
               | Upload photos
+              html
+                body
+                  form(action='/upload', enctype='multipart/form-data', method='post')
+                    input(type='file', name='upload', multiple='multiple')
+                    input(type='submit', value='Upload')
+                    
+              form#fileUpload(name="fileUpload", method="POST", action="/fileUpload", enctype="multipart/form-data")
+                input#userInputFile(type="file", name="logName")
+                button(type="submit") Upload
 block footer
