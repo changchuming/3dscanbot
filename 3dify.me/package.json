@@ -18,6 +18,7 @@
     "jade": "~1.10.0",
     "kue": "~0.9.3",
     "morgan": "~1.5.3",
+    "multer": "~0.1.6",
     "npm-check-updates": "~1.5.1",
     "redis": "~0.12.1",
     "serve-favicon": "~2.2.1"

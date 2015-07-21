@@ -11,7 +11,7 @@ var fs = require("fs"),
 var start = function (request,response){
 
     console.log("Request handler 'start' was called");
-
+	
     var body = '<form action="/upload" enctype="multipart/form-data" method="post">' +
         '<input type="text" name="title"><br>' +
         '<input type="file" name="upload"><br>' +
@@ -56,6 +56,17 @@ var upload = function (request,response){
     
     var form = new formidable.IncomingForm();
 
+	form.parse(request, function(err, fields, files){
+	    request.fields = fields;
+        request.files = files;
+        response.writeHead(200, {'content-type': 'text/plain'});
+    	response.write('received upload:\n\n');
+    	response.end(util.inspect({fields: fields, files: files}));
+        return console.log('parsed.');
+    });
+
+    
+/*
     form.parse(request, function(err, fields, files) {
       //response.writeHead(200, {'content-type': 'text/plain'});
       //response.write('received upload:\n\n');
@@ -84,7 +95,7 @@ var upload = function (request,response){
         });
       
       console.log("uploading");
-    });
+    });*/
     
     console.log("upload finished");
     
