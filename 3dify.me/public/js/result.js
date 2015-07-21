@@ -10,31 +10,18 @@ $(function () {
 	connect();
 	join('resultwatch');
 	listen('currentjob', updateStatus);
-	currentStatusVM = new statusVM();
+	listen('currentprogress', updateProgress);
+	currentStatusVM = new statusVM(jobid, currentjob, currentprogress);
 	// Activates knockout.js
 	ko.applyBindings(currentStatusVM);
 });
 
-function updateStatus(currentjob) {
-	alert(currentjob);
-	alert(jobid);
-	if (currentjob < jobid) { // In queue
-		// Display place in queue
-	} else if (currentjob == jobid) { // Ongoing
-		stop('currentjob');
-		listen('currentprogress', updateProgress);
-	} else if (currentjob > jobid) { // Finishe
-		leave('resultwatch');
-		renderModel();
-	}
+function updateStatus(job) {
+	currentStatusVM.updateJob(job);
 }
 
-function updateProgress(data) {
-	if (data == 'done') {
-		stop('currentprogress');
-		leave('resultwatch');
-		renderModel();
-	}
+function updateProgress(progress) {
+	currentprogress = progress;
 }
 
 function renderModel() {
@@ -67,6 +54,75 @@ function stop(event, callback) {
 	io.removeListener(event, callback);
 }
 
-function statusVM() {
+function statusVM(id, job, progress) {
+	this.jobID = id;
+	this.maxProgress = 8;
+	this.currentJob = ko.observable(job);
+	this.currentProgress = ko.observable(parseInt(progress));
 	this.currentStatus = ko.observable('Getting status...');
+	
+    this.updateJob = function(job) {
+    	this.currentJob(job);
+    }
+    
+    this.updateProgress = function(progress) {
+    	this.currentProgress(progress);
+    }
+    
+    this.progressPercent = ko.computed(function() {
+        return Math.round(this.currentProgress() / this.maxProgress * 100);
+    }, this);
+    
+    this.displayProgress = ko.computed(function() {
+    	if (this.currentJob() < this.jobID) {
+    		return false;
+		} else if (this.currentJob() == this.jobID) { // Ongoing
+			if (this.progressPercent == 100) {
+				stop('currentprogress');
+				stop('currentjob');
+				leave('resultwatch');
+				renderModel();
+				return false;
+			} else {
+				return true;
+			}
+		} else if (this.currentJob() > this.jobID) { // Finished
+			stop('currentprogress');
+			stop('currentjob');
+			leave('resultwatch');
+			renderModel();
+			return false;
+		}
+    }, this);
+    
+    this.progressMessage = ko.computed(function() {
+    	switch(this.currentProgress()) {
+		    case 1:
+		        return "Preparing photos...";
+		        break;
+		    case 2:
+		        return "Matching features...";
+		        break;
+		    case 3:
+		        return "Doing bundle adjustments...";
+		        break;
+		    case 4:
+		        return "Converting to PMVS format...";
+		        break;
+		    case 5:
+		        return "Generating dense point cloud...";
+		        break;
+		    case 6:
+		        return "Reconstructing surface model based on dense point cloud...";
+		        break;
+		    case 7:
+		        return "Transferring color from dense point cloud to surface model...";
+		        break;
+		    case 8:
+		        return "Files saved...";
+		        break;
+		    default:
+		        return "Job progress error!";
+		}
+    }, this);
 }

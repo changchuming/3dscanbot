@@ -3,8 +3,23 @@ extends layout
 block styles
   link(rel='stylesheet', type='text/css', href='http://www.x3dom.org/download/x3dom.css')
 block content
+  
   .main
     .main-body
+      .container
+          .row(data-bind="visible: !displayProgess()")
+            .col-md-8.col-md-offset-2
+              h1.brand-heading
+              | Job in queue
+              p.intro-text
+              textarea(data-bind="text: 'Your job is numbered' + jobID + '. Currently processing job ' + currentJob() + '.'")
+            .container
+          .row
+            .col-md-8.col-md-offset-2
+              h1.brand-heading(data-bind:)(data-bind="visible: displayProgess()")
+              | Job processing
+              p.intro-text
+              textarea(data-bind="text: currentProgress()")
       x3d(style='width:100%; height:600px; border:0; margin:0; padding:0;')
         scene
           inline(url='/uploads/' + modelname + '/coloredmodel.x3d')
@@ -14,6 +29,8 @@ block scripts
   script.
     var iid = !{iid}
     var jobid = !{jobid}
+    var currentjob = !{currentjob}
+    var currentprogress = !{currentprogress}
   // x3dom to display 3d models
   script(src='http://www.x3dom.org/download/x3dom.js', type='text/javascript')
   // Socket.io

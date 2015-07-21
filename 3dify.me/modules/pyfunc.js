@@ -20,8 +20,10 @@ exports.reconstruct = function(iid, done) {
     python.stdout.on('data', function(data){
     	progressString = data.toString();
     	if (progressString.indexOf("###") > -1) {
-    		progressString.replace('#','');
+    		progressString = progressString.replace(/\D/g,'');
+    		console.log(progressString);
     		progressNum = parseInt(progressString);
+    		console.log(progressNum);
     		app.io.room('resultwatch').broadcast('currentprogress', progressNum);
     		redisClient.set('currentprogress', progressNum, function(err,reply) {
     			console.log(progressNum);
@@ -35,10 +37,6 @@ exports.reconstruct = function(iid, done) {
     	if (code !== 0) {
     		app.io.room('resultwatch').broadcast('error', code);
 		}
-		app.io.room('resultwatch').broadcast('currentprogress', 'done');
-		redisClient.set('currentprogress', 'done', function(err,reply) {
-			console.log('Progress: Done');
-			done();
-		})
+		done();
     });
 }
