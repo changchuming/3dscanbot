@@ -24,14 +24,14 @@ exports.process = function() {
 }
 
 // Create job
-exports.newJob = function (iid){
+exports.newJob = function (iid, callback){
 	 var job = jobs.create('reconstruct', {
 	 	iid: iid});
 	 job.save( function(err){
 		 if (!err) {
 		 	redisClient.hset('jobs', job.id, iid, function(err, reply) {
 		 		 console.log('Job ' + job.id + ': ' + iid + ' saved');
-		 		 //res.send({reply: reply});
+		 		 callback(job.id);
 		 	 });
 	 	 } else {
 	 	 	console.log('Error saving job!');
