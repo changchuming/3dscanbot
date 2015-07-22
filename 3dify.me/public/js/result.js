@@ -21,11 +21,7 @@ function updateStatus(job) {
 }
 
 function updateProgress(progress) {
-	currentprogress = progress;
-}
-
-function renderModel() {
-	alert('Render something!');
+	currentStatusVM.updateProgress(progress);
 }
 
 function connect() {
@@ -57,16 +53,18 @@ function stop(event, callback) {
 function statusVM(id, job, progress) {
 	this.jobID = id;
 	this.maxProgress = 8;
-	this.currentJob = ko.observable(job);
+	this.currentJob = ko.observable(parseInt(job));
 	this.currentProgress = ko.observable(parseInt(progress));
 	this.currentStatus = ko.observable('Getting status...');
+	this.displayModel = ko.observable(false);
+	this.modelURL = ko.observable('');
 	
     this.updateJob = function(job) {
-    	this.currentJob(job);
+    	this.currentJob(parseInt(job));
     }
     
     this.updateProgress = function(progress) {
-    	this.currentProgress(progress);
+    	this.currentProgress(parseInt(progress));
     }
     
     this.progressPercent = ko.computed(function() {
@@ -81,7 +79,8 @@ function statusVM(id, job, progress) {
 				stop('currentprogress');
 				stop('currentjob');
 				leave('resultwatch');
-				renderModel();
+				this.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
+				this.displayModel(true);
 				return false;
 			} else {
 				return true;
@@ -90,7 +89,8 @@ function statusVM(id, job, progress) {
 			stop('currentprogress');
 			stop('currentjob');
 			leave('resultwatch');
-			renderModel();
+			this.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
+			this.displayModel(true);
 			return false;
 		}
     }, this);

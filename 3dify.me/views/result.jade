@@ -7,22 +7,18 @@ block content
   .main
     .main-body
       .container
-          .row(data-bind="visible: !displayProgess()")
+          .row(data-bind="visible: !displayProgress() && !displayModel()")
             .col-md-8.col-md-offset-2
-              h1.brand-heading
-              | Job in queue
-              p.intro-text
-              textarea(data-bind="text: 'Your job is numbered' + jobID + '. Currently processing job ' + currentJob() + '.'")
+              h1 Job in queue
+              h2(data-bind="text: 'Your job is numbered ' + jobID + '. Currently processing job ' + currentJob() + '.'")
             .container
-          .row
+          .row(data-bind="visible: displayProgress() && !displayModel()")
             .col-md-8.col-md-offset-2
-              h1.brand-heading(data-bind="visible: displayProgess()")
-              | Job processing
-              p.intro-text
-              textarea(data-bind="text: currentProgress()")
-      x3d(style='width:100%; height:600px; border:0; margin:0; padding:0;')
+              h1 Job processing
+              h2(data-bind="text: progressMessage()")
+      x3d(style='width:100%; height:600px; border:0; margin:0; padding:0;' data-bind="visible: displayModel()")
         scene
-          inline(url='/uploads/' + modelname + '/coloredmodel.x3d')
+          inline(data-bind="attr: { url: modelURL()}")
 block footer
 block scripts
   // Server variables
