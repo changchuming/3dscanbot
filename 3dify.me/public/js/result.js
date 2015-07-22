@@ -119,7 +119,10 @@ function statusVM(id, job, progress) {
 		        return "Transferring color from dense point cloud to surface model...";
 		        break;
 		    case 8:
-		        return "Files saved...";
+		        return "Saving files...";
+		        break;
+		    case 9:
+		        return "Reconstruction complete!";
 		        break;
 		    default:
 		        return "Job progress error!";
