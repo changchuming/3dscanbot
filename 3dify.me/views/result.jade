@@ -15,7 +15,7 @@ block content
           .row(data-bind="visible: displayProgress() && !displayModel()")
             .col-md-8.col-md-offset-2
               h1 Job processing
-              h2(data-bind="text: progressPercent() + '%' + progressMessage()")
+              h2(data-bind="text: progressPercent() + '% ' + progressMessage()")
       x3d(style='width:100%; height:600px; border:0; margin:0; padding:0;' data-bind="visible: displayModel()")
         scene
           inline(data-bind="attr: { url: modelURL()}")

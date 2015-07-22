@@ -75,7 +75,7 @@ function statusVM(id, job, progress) {
     	if (this.currentJob() < this.jobID) {
     		return false;
 		} else if (this.currentJob() == this.jobID) { // Ongoing
-			if (this.progressPercent == 100) {
+			if (this.progressPercent() == 100) {
 				stop('currentprogress');
 				stop('currentjob');
 				leave('resultwatch');
