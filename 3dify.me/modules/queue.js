@@ -15,6 +15,7 @@ exports.process = function() {
 		// Tells server which job is current processing
 		redisClient.set('currentjob', job.id, function(err,reply) {
 			console.log('Job ' + job.id + ': ' + job.data.iid + ' is now processing');
+			app.io.room('resultwatch').broadcast('currentjob', job.id);
 		})
 		// Start python reconstruction
 		pyfunc.reconstruct(job.data.iid, done);

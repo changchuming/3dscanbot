@@ -23,16 +23,6 @@ exports.display = function(req, res){
 };
 
 //##############################################################################################
-// Callback when user connects to pi room
-//##############################################################################################
-exports.joincb = function(room) {
-	// Broadcast when user connects
-	if (room == 'piwatch') {
-	  	console.log('User connected to Piwatch.');
-	}
-}
-
-//##############################################################################################
 // Client calls for new job and server pushes to pi
 //##############################################################################################
 exports.newjob = function(req) {
