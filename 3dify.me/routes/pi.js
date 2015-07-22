@@ -68,8 +68,9 @@ exports.removepic = function(req) {
 // Client calls for processing job using iid and server processes
 //##############################################################################################
 exports.processjob = function(req) {
+console.log(req.data);
 	queue.newJob(req.data.iid, function(jobid) {
-		app.io.room('piwatch').broadcast('setjobid', {piid: req.data.piid, jobid:jobid});
+		app.io.room('piid'+req.data.piid).broadcast('setjobid', {piid: req.data.piid, jobid:jobid});
 	});
 }
 

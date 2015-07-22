@@ -123,8 +123,8 @@ function piVM(data) {
     
     this.newJob = function() {
     	this.hasJob(true);
-		io.emit('newjob', this.piID()); // Requests server for a new job
 		join('piid'+this.piID()); // Join pi room
+		io.emit('newjob', this.piID()); // Requests server for a new job
     }
 
     this.discardJob = function() {
@@ -134,6 +134,7 @@ function piVM(data) {
     }
         
     this.processJob = function() {
+    console.log(this.iID);
     	io.emit('processjob', {piid: this.piID(), iid: this.iID});
     }
 
