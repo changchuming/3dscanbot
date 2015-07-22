@@ -1,4 +1,5 @@
 // Dependencies
+var app = require('../app');
 var kue = require('kue');
 var pyfunc = require('./pyfunc');
 
