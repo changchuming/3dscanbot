@@ -121,9 +121,6 @@ function statusVM(id, job, progress) {
 		    case 8:
 		        return "Saving files...";
 		        break;
-		    case 9:
-		        return "Reconstruction complete!";
-		        break;
 		    default:
 		        return "Job progress error!";
 		}

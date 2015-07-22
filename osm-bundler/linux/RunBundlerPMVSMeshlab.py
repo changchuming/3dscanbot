@@ -43,4 +43,3 @@ if os.path.isfile("/home/ubuntu/3dscanbot/3dify.me/public/uploads/%s/model.x3d" 
   # Copy to folder
   print "###8"
   shutil.copy2('%s/pmvs/models/pmvs_options.txt.ply' % manager.workDir, '/home/ubuntu/3dscanbot/3dify.me/public/uploads/%s' % os.path.basename(manager.photosArg) + '/pointcloud.ply')
-  print "###9"
