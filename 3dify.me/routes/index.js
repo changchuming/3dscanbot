@@ -10,12 +10,14 @@ var app = require('../app');
 var async = require('async');
 var pyfunc = require('../modules/pyfunc'); 
 var jobs = app.jobs;
+var formidable = require("formidable");
  
 //##############################################################################################
 // Display home page
 //##############################################################################################
 exports.display = function(req, res){
   	// commenting out the main index page
+
   	res.render('index', {
 	  	title: '3Dify'
   	});
@@ -49,9 +51,25 @@ exports.upload = function(req, res){
 	};
 	async.parallel([async.apply(execPipe, '/home/ubuntu/3dscanbot/osm-bundler/examples/ET')], callback);
 	*/
-	photoUploader.upload(req, res);
+	console.log("hello");
+	
+	if(req.method.toLowerCase() == 'post'){
+		
+		console.log("hello2");
+		var form = new formidable.IncomingForm();
+		
+    	form.parse(req, function(err, fields, files) {
+    	    console.log(util.inspect({fields: fields, files: files}));
+      		res.writeHead(200, {'content-type': 'text/plain'});
+      		res.write('received upload:\n\n');
+      		res.end(util.inspect({fields: fields, files: files}));
+    	});
 
-};
+    return;
+	}
+	//photoUploader.upload(req, res);
+
+}
 
 exports.show = function(req, res){
 

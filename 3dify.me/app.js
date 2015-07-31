@@ -153,11 +153,9 @@ app.get('/upload', index.upload);
 // Logic to upload photos
 //##############################################################################################
 
-app.post('/', function (req, res) {
+app.post('/upload', function (req, res) {
 
-	if(req.method.toLowerCase() == 'post'){
-		console.log("hello");
-	}
+	index.upload(req,res);
 		
 	/*
     var form = new formidable.IncomingForm;
