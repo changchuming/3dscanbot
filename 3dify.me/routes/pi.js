@@ -23,16 +23,6 @@ exports.display = function(req, res){
 };
 
 //##############################################################################################
-// Callback when user connects to pi room
-//##############################################################################################
-exports.joincb = function(room) {
-	// Broadcast when user connects
-	if (room == 'piwatch') {
-	  	console.log('User connected to Piwatch.');
-	}
-}
-
-//##############################################################################################
 // Client calls for new job and server pushes to pi
 //##############################################################################################
 exports.newjob = function(req) {
@@ -78,7 +68,10 @@ exports.removepic = function(req) {
 // Client calls for processing job using iid and server processes
 //##############################################################################################
 exports.processjob = function(req) {
-	queue.newJob(req.data);
+console.log(req.data);
+	queue.newJob(req.data.iid, function(jobid) {
+		app.io.room('piid'+req.data.piid).broadcast('setjobid', {piid: req.data.piid, jobid:jobid});
+	});
 }
 
 //##############################################################################################

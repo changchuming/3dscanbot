@@ -21,15 +21,11 @@ exports.reconstruct = function(iid, done) {
     	progressString = data.toString();
     	if (progressString.indexOf("###") > -1) {
     		progressString = progressString.replace(/\D/g,'');
-    		console.log(progressString);
     		progressNum = parseInt(progressString);
-    		console.log(progressNum);
     		app.io.room('resultwatch').broadcast('currentprogress', progressNum);
     		redisClient.set('currentprogress', progressNum, function(err,reply) {
-    			console.log(progressNum);
+    			console.log('currentprogress is ' + progressNum);
     		})
-    		//res.write(dataString);
-    		//output += data;
     	}
 	});
 	

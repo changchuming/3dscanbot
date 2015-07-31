@@ -15,6 +15,7 @@ $(function () {
 	listen('pileave', removePi);
 	listen('addpic', addPic);
 	listen('setiid', setIID);
+	listen('setjobid', setJobID);
 	// Add all existing pis
 	for (var piid in pis) {
 		addPi({piid: piid, piname: pis[piid]});
@@ -78,6 +79,15 @@ function setIID(data) {
     });
 }
 
+// Set the job iid of a certain pi
+function setJobID(data) {
+	ko.utils.arrayForEach(currentPiArrayVM.piArray(), function(eachPiVM) {
+        if (eachPiVM.piID() == data.piid) {
+        	eachPiVM.setJobID(data.jobid);
+        }
+    });
+}
+
 //##############################################################################################
 // View model for array of pis
 //##############################################################################################
@@ -107,10 +117,14 @@ function piVM(data) {
     	this.iID = iid;
     }
     
+    this.setJobID = function(jobid){
+    	alert(jobid);
+    }
+    
     this.newJob = function() {
     	this.hasJob(true);
-		io.emit('newjob', this.piID()); // Requests server for a new job
 		join('piid'+this.piID()); // Join pi room
+		io.emit('newjob', this.piID()); // Requests server for a new job
     }
 
     this.discardJob = function() {
@@ -120,7 +134,8 @@ function piVM(data) {
     }
         
     this.processJob = function() {
-    	io.emit('processjob', this.iID);
+    console.log(this.iID);
+    	io.emit('processjob', {piid: this.piID(), iid: this.iID});
     }
 
     this.takePic = function(){

@@ -13,9 +13,9 @@ var queue = require('../modules/queue');
 // Display results of a reconstruction
 //##############################################################################################
 exports.display = function(req, res){
-  	redisClient.hget('jobs', req.params.jobid, function(err, jobexists){
+  	redisClient.hget('jobs', req.params.jobid, function(err, iid){
 		// If schedule invalid
-		if (jobexists == null) {
+		if (iid == null) {
 			res.send('Invalid link.');
 		}
 		// Else display schedule
@@ -23,10 +23,10 @@ exports.display = function(req, res){
 		  	redisClient.get('currentjob', function(err, currentjob) {
   			  	redisClient.get('currentprogress', function(err, currentprogress) {
 	  	  			res.render('result', {
-	  				title: reply,
-	  				iid: reply,
+	  				title: iid,
+	  				iid: iid,
 	  				jobid: req.params.jobid,
-	  				modelname: reply,
+	  				modelname: iid,
 	  				currentjob: currentjob,
 	  				currentprogress: currentprogress
   			});
@@ -35,28 +35,3 @@ exports.display = function(req, res){
 		}
 	});
 };
-
-//##############################################################################################
-// Callback when user joins results room
-//##############################################################################################
-exports.joincb = function(room) {
-	// Broadcast current job
-	if (room == 'resultwatch') {
-	  	redisClient.get('currentjob', function(err, reply) {
-	  		app.io.room('resultwatch').broadcast('currentjob', reply);
-	  		console.log('User connected and current job is ' + reply)
-  		});
-	}
-	else if (room == 'resultwatch') {
-	  	redisClient.get('currentprogress', function(err, reply) {
-	  		app.io.room('resultwatch').broadcast('currentprogress', reply);
-	  		console.log('User connected and current progress is ' + reply)
-  		});
-	}
-}
-	
-// broadcasts to a room
-var broadcastResult = function(result) {
-    // Get something then broadcasts it
-	//app.io.room(result).broadcast('something', data);
-}

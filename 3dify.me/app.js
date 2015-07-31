@@ -10,9 +10,7 @@ var favicon = require('serve-favicon');
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 // Redis, database module
 var redis = require('redis');
-var redisClient = redis.createClient();
-// Kue, queueing module
-var kue = require('kue');
+redisClient = redis.createClient();
 // Standard stuff
 app.configure(function(){
 	  app.use(express.bodyParser());
@@ -94,8 +92,6 @@ app.listen(app.get('port'), function(){
 //Joins a room
 app.io.route('join', function(req) {
     req.io.join(req.data);
-	result.joincb(req.data);
-	pi.joincb(req.data);
 });
 
 // Leaves a room

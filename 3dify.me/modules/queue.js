@@ -1,4 +1,5 @@
 // Dependencies
+var app = require('../app');
 var kue = require('kue');
 var pyfunc = require('./pyfunc');
 
@@ -15,6 +16,7 @@ exports.process = function() {
 		// Tells server which job is current processing
 		redisClient.set('currentjob', job.id, function(err,reply) {
 			console.log('Job ' + job.id + ': ' + job.data.iid + ' is now processing');
+			app.io.room('resultwatch').broadcast('currentjob', job.id);
 		})
 		// Start python reconstruction
 		pyfunc.reconstruct(job.data.iid, done);
@@ -22,14 +24,14 @@ exports.process = function() {
 }
 
 // Create job
-exports.newJob = function (iid){
+exports.newJob = function (iid, callback){
 	 var job = jobs.create('reconstruct', {
 	 	iid: iid});
 	 job.save( function(err){
 		 if (!err) {
 		 	redisClient.hset('jobs', job.id, iid, function(err, reply) {
 		 		 console.log('Job ' + job.id + ': ' + iid + ' saved');
-		 		 //res.send({reply: reply});
+		 		 callback(job.id);
 		 	 });
 	 	 } else {
 	 	 	console.log('Error saving job!');
