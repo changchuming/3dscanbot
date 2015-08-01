@@ -39,6 +39,9 @@ exports.reconstruct = function(iid, done) {
 		}
 		console.log('Job is done.');
 		app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
+		redisClient.set('currentprogress', MAX_PROGRESS, function(err,reply) {
+			console.log('currentprogress is ' + MAX_PROGRESS);
+		})
 		done();
     });
 }
