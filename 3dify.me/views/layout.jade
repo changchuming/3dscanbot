@@ -16,6 +16,16 @@ html
     block styles
     
   body#page-top(data-spy='scroll', data-target='.navbar-fixed-top')
+    // FB share SDK
+    #fb-root
+    script.
+      (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=608536652558379";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
     // Navigation
     nav.navbar.navbar-custom.navbar-fixed-top(role='navigation')
       .container
@@ -32,12 +42,14 @@ html
             li.hidden
               a(href='#page-top')
             li
-              a.page-scroll(href='#about') Upload
+              a.page-scroll(href='/') Upload
             li
-              a.page-scroll(href='#download') View
+              a.page-scroll(href='pi') Pi
             li
-              a.page-scroll(href='#contact') About
+              a.page-scroll(href='about') About
     block content
+    .span7.center
+      .fb-like(data-href='http://52.74.60.57:44444/', data-layout='standard', data-action='like', data-show-faces='true', data-share='true', color-scheme='dark')
     .footer.text-center
       p Copyright © 3Dify.me
     block footer
