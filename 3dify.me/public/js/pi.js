@@ -118,7 +118,7 @@ function piVM(data) {
     }
     
     this.setJobID = function(jobid){
-    	alert(jobid);
+		window.location.href = jobid;
     }
     
     this.newJob = function() {

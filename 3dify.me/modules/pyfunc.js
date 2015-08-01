@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------------------------
 var app = require('../app');
 var child = require('child_process');
+var MAX_PROGRESS = 8;
 
 //##############################################################################################
 // Run python reconstruction on specific job
@@ -31,8 +32,16 @@ exports.reconstruct = function(iid, done) {
 	
     python.on('close', function(code){ 
     	if (code !== 0) {
-    		app.io.room('resultwatch').broadcast('error', code);
+    		// If error
 		}
+		else {
+			// No error
+		}
+		console.log('Job is done.');
+		app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
+		redisClient.set('currentprogress', MAX_PROGRESS, function(err,reply) {
+			console.log('currentprogress is ' + MAX_PROGRESS);
+		})
 		done();
     });
 }
