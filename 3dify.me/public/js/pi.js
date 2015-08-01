@@ -118,7 +118,7 @@ function piVM(data) {
     }
     
     this.setJobID = function(jobid){
-    	var siteURL = $(location).attr('href').substring(0, str.lastIndexOf("/"));
+    	var siteURL = $(location).attr('href').substring(0, $(location).attr('href').lastIndexOf("/"));
 		window.location.href = siteURL+jobid;
     }
     
