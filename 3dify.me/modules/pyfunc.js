@@ -32,7 +32,7 @@ exports.reconstruct = function(iid, done) {
 	
     python.on('close', function(code){ 
     	if (code !== 0) {
-    		app.io.room('resultwatch').broadcast('error', code);
+    		app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
 		}
 		else {
 			app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
