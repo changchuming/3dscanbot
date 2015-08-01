@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------------------------
 var app = require('../app');
 var child = require('child_process');
+var MAX_PROGRESS = 8;
 
 //##############################################################################################
 // Run python reconstruction on specific job
@@ -32,6 +33,9 @@ exports.reconstruct = function(iid, done) {
     python.on('close', function(code){ 
     	if (code !== 0) {
     		app.io.room('resultwatch').broadcast('error', code);
+		}
+		else {
+			app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
 		}
 		done();
     });
