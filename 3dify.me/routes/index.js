@@ -52,10 +52,10 @@ exports.upload = function(req, res){
       	//console.log(files);
       	if (files.upload.constructor === Array) {
       		for (file in files.upload) {
-      			app.io.room('iid'+fields.iid).broadcast('addpic', files.upload[file].path.substring(files.upload[file].path.indexOf("\\")));
+      			app.io.room('iid'+fields.iid).broadcast('addpic', files.upload[file].path.replace('public', ''));
       		}
       	} else {
-      		app.io.room('iid'+fields.iid).broadcast('addpic', files.upload.path.substring(files.upload.path.indexOf("\\")));
+      		app.io.room('iid'+fields.iid).broadcast('addpic', files.upload.path.replace('public', ''));
       	}
     });
 }
