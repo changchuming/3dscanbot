@@ -21,6 +21,8 @@ var path = require('path');
 var multer  = require('multer');
 var done = false;
 var formidable = require('formidable');
+var util = require("util");
+var bodyParser = require("body-parser");
 
 //----------------------------------------------------------------------------------------------
 // Queue
@@ -61,6 +63,7 @@ onFileUploadComplete: function (file) {
   done=true;
 }
 }));
+
 //----------------------------------------------------------------------------------------------
 // Development only
 //----------------------------------------------------------------------------------------------
@@ -143,15 +146,37 @@ app.io.route('piip', function(req) {
 // Display landing page
 //##############################################################################################
 app.get('/', index.display);
-app.get('/upload', index.upload);
+//app.get('/upload', index.upload);
 
 //##############################################################################################
 // Logic to upload photos
 //##############################################################################################
 
-app.post('/upload', function (req, res) {
+app.post('/upload', index.upload);
 
-	index.upload(req,res);
+/* function (req, res) {
+
+	//index.upload(req,res);
+		
+		
+	if(req.method.toLowerCase() == 'post'){
+		
+		console.log("hello2");
+		var form = new formidable.IncomingForm();
+		
+    	form.parse(req, function(err, fields, files) {
+    	    console.log(util.inspect({fields: fields, files: files}));
+      		res.writeHead(200, {'content-type': 'text/plain'});
+      		console.log("hello3");
+      		res.write('received upload:\n\n');
+      		console.log("hello4");
+      		res.end(util.inspect({fields: fields, files: files}));
+      		console.log("hello5");
+    	});
+
+    return;
+	}
+	*/
 		
 	/*
     var form = new formidable.IncomingForm;
@@ -177,7 +202,7 @@ app.post('/upload', function (req, res) {
 
     return;
     */
-});
+//});
 
 /*
 app.post('/api/photo',function(req,res){

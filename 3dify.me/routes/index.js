@@ -11,6 +11,7 @@ var async = require('async');
 var pyfunc = require('../modules/pyfunc'); 
 var jobs = app.jobs;
 var formidable = require("formidable");
+var util = require("util");
  
 //##############################################################################################
 // Display home page
@@ -56,13 +57,17 @@ exports.upload = function(req, res){
 	if(req.method.toLowerCase() == 'post'){
 		
 		console.log("hello2");
+		console.log(req.body);
 		var form = new formidable.IncomingForm();
 		
     	form.parse(req, function(err, fields, files) {
     	    console.log(util.inspect({fields: fields, files: files}));
       		res.writeHead(200, {'content-type': 'text/plain'});
+      		console.log("hello3");
       		res.write('received upload:\n\n');
+      		console.log("hello4");
       		res.end(util.inspect({fields: fields, files: files}));
+      		console.log("hello5");
     	});
 
     return;
