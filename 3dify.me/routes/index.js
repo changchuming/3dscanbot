@@ -41,38 +41,15 @@ exports.display = function(req, res){
 //Uploads files and adds to queue
 //##############################################################################################
 exports.upload = function(req, res){
-	
-	/*console.log('script run');
-	var callback = function(err, result) {
-	    if (err) {
-	        console.log('Error in Python Script:');
-	        throw err;
-	    }
-	    console.log('called back with result:', result);
-	};
-	async.parallel([async.apply(execPipe, '/home/ubuntu/3dscanbot/osm-bundler/examples/ET')], callback);
-	*/
-	console.log("hello");
-	
-	if(req.method.toLowerCase() == 'post'){
-		
-		console.log("hello2");
-		console.log(req.body);
-		var form = new formidable.IncomingForm();
-		
-    	form.parse(req, function(err, fields, files) {
-    	    console.log(util.inspect({fields: fields, files: files}));
-      		res.writeHead(200, {'content-type': 'text/plain'});
-      		console.log("hello3");
-      		res.write('received upload:\n\n');
-      		console.log("hello4");
-      		res.end(util.inspect({fields: fields, files: files}));
-      		console.log("hello5");
-    	});
 
-    return;
-	}
-	//photoUploader.upload(req, res);
+		var form = new formidable.IncomingForm();
+	    form.parse(req, function(err, fields, files) {
+	    	console.log(util.inspect({fields: fields, files: files}));
+	      	//res.writeHead(200, {'content-type': 'text/plain'});
+	      	//res.write('received upload:\n\n');
+	      	//res.end(util.inspect({fields: fields, files: files}));
+	      
+	    });
 
 }
 

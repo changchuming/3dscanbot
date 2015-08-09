@@ -12,8 +12,10 @@ app.use(favicon(__dirname + '/public/img/favicon.ico'));
 var redis = require('redis');
 redisClient = redis.createClient();
 // Standard stuff
+var bodyParser = require("body-parser");
 app.configure(function(){
-	  app.use(express.bodyParser());
+	  app.use(bodyParser.json());
+	  app.use(bodyParser.urlencoded({ extended: true }));
 	  app.use(app.router);
 	});
 var http = require('http');
@@ -22,7 +24,6 @@ var multer  = require('multer');
 var done = false;
 var formidable = require('formidable');
 var util = require("util");
-var bodyParser = require("body-parser");
 
 //----------------------------------------------------------------------------------------------
 // Queue
