@@ -6,7 +6,6 @@
 // Module dependencies
 //----------------------------------------------------------------------------------------------
 var app = require('../app');
-var pyfunc = require('../modules/pyfunc');
 var queue = require('../modules/queue');
 var fs = require('fs');
 

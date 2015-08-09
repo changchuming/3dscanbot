@@ -8,110 +8,76 @@
 //----------------------------------------------------------------------------------------------
 var app = require('../app');
 var async = require('async');
-var pyfunc = require('../modules/pyfunc'); 
+var queue = require('../modules/queue');
 var jobs = app.jobs;
 var formidable = require("formidable");
 var util = require("util");
+var fs = require('fs');
  
 //##############################################################################################
 // Display home page
 //##############################################################################################
 exports.display = function(req, res){
   	// commenting out the main index page
-
-  	res.render('index', {
-	  	title: '3Dify'
-  	});
-  	
-  	//photoUploader.start(req, res);
-  	
-  	/*var options = {
-	  scriptPath: '/home/ubuntu/3dscanbot/osm-bundler/linux',
-	  args: ['--photos="./examples/ET"']
-	};
-	PythonShell.run('RunBundlerPMVSMeshlab.py', options, function (err, results) {
-  		if (err) throw err;
-  		// results is an array consisting of messages collected during execution 
-  		console.log('results: %j', results);
-  	});*/
-
+	var iid;
+	redisClient.get('lastiid', function(err, reply) {
+		if (reply == null) {
+			iid = 1;
+		} else {
+			iid = parseInt(reply)+1;
+		}
+		fs.mkdir('public/uploads/'+iid); // Make uploads folder for this job
+		redisClient.set('lastiid', iid, function (err, reply) {}); // Update last iid
+	  	res.render('index', {
+	  		title: '3Dify',
+	  		iid: iid
+	  	});
+	});
 };
 
 //##############################################################################################
 //Uploads files and adds to queue
 //##############################################################################################
 exports.upload = function(req, res){
-
-		var form = new formidable.IncomingForm();
-	    form.parse(req, function(err, fields, files) {
-	    	console.log(util.inspect({fields: fields, files: files}));
-	      	//res.writeHead(200, {'content-type': 'text/plain'});
-	      	//res.write('received upload:\n\n');
-	      	//res.end(util.inspect({fields: fields, files: files}));
-	      
-	    });
-
+	var form = new formidable.IncomingForm();
+	
+	form.keepExtensions = true;
+	form.multiples = true;
+	form.on('field', function(name, value) {
+		if (name='iid') {
+			form.uploadDir = "./public/uploads/"+value;
+		}
+	});
+    form.parse(req, function(err, fields, files) {
+      	//console.log(files);
+      	if (files.upload.constructor === Array) {
+      		for (file in files.upload) {
+      			app.io.room('iid'+fields.iid).broadcast('addpic', files.upload[file].path.substring(files.upload[file].path.indexOf("\\")));
+      		}
+      	} else {
+      		app.io.room('iid'+fields.iid).broadcast('addpic', files.upload.path.substring(files.upload.path.indexOf("\\")));
+      	}
+    });
 }
 
-exports.show = function(req, res){
-
-	/*console.log('script run');
-	var callback = function(err, result) {
-	    if (err) {
-	        console.log('Error in Python Script:');
-	        throw err;
-	    }
-	    console.log('called back with result:', result);
-	};
-	async.parallel([async.apply(execPipe, '/home/ubuntu/3dscanbot/osm-bundler/examples/ET')], callback);
-	*/
-
-	console.log('script run');
-	pyfunc.reconstruct("/home/ubuntu/3dscanbot/osm-bundler/examples/ET", res);
-	//execPipe.execPipe('/home/ubuntu/3dscanbot/osm-bundler/examples/ET');
-//	var options = {
-//	  scriptPath: '/home/ubuntu/3dscanbot/osm-bundler/linux',
-//	  args: ['--photos=/home/ubuntu/3dscanbot/osm-bundler/examples/ET']
-//	};
-//	PythonShell.run('RunBundlerPMVS.py', options, function (err, results) {
-//  		if (err) throw err;
-//  		// results is an array consisting of messages collected during execution 
-//  		console.log('results: %j', results);
-//  	});
-
-	
-	//async.parallel([async.apply(execPipe, '/home/ubuntu/3dscanbot/osm-bundler/examples/ET')], callback);
-	
-	//photoUploader.show(req, res);
-
-};
+//##############################################################################################
+// Client calls remove pic and server removes pic
+//##############################################################################################
+exports.removepic = function(req) {
+	try {
+		fs.unlinkSync('public/'+req.data);
+	} catch (ex) {
+		console.log(ex);
+	}
+}
 
 //##############################################################################################
-//Uploading of files
+// Client calls for processing job using iid and server processes
 //##############################################################################################
-/*
-http.createServer(function(req, res) {
-	  //Process the form uploads
-	  if (req.url == '/upload' && req.method.toLowerCase() == 'post') {
-	    var form = new formidable.IncomingForm();
-	    form.parse(req, function(err, fields, files) {
-	      res.writeHead(200, {'content-type': 'text/plain'});
-	      res.write('received upload:\n\n');
-	      res.end(util.inspect({fields: fields, files: files}));
-	    });
-	 
-	    return;
-	  }
-	 
-	  //Display the file upload form.
-	  res.writeHead(200, {'content-type': 'text/html'});
-	  res.end(
-	    '<form action="/upload" enctype="multipart/form-data" method="post">'+
-	    '<input type="text" name="title"><br>'+
-	    '<input type="file" name="upload" multiple="multiple"><br>'+
-	    '<input type="submit" value="Upload">'+
-	    '</form>'
-	  );
-	 
-	}).listen(8080);
-	*/
+exports.processjob = function(req) {
+console.log(req.data);
+	queue.newJob(req.data, function(jobid) {
+		app.io.room('iid'+req.data).broadcast('setjobid', jobid);
+	});
+}
+

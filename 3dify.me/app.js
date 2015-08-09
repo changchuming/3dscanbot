@@ -109,27 +109,27 @@ app.io.route('pijoin', function(req) {
 });
 
 // Set new job with iid for pi
-app.io.route('newjob', function(req) {
+app.io.route('pinewjob', function(req) {
     pi.newjob(req);
 });
 
 // Asks a certain pi to take a picture
-app.io.route('takepic', function(req) {
+app.io.route('pitakepic', function(req) {
     pi.takepic(req);
 });
 
 // Asks a certain pi to add a picture
-app.io.route('addpic', function(req) {
+app.io.route('piaddpic', function(req) {
     pi.addpic(req);
 });
 
 // Remove picture from database
-app.io.route('removepic', function(req) {
+app.io.route('piremovepic', function(req) {
     pi.removepic(req);
 });
 
 // Remove picture from database
-app.io.route('processjob', function(req) {
+app.io.route('piprocessjob', function(req) {
     pi.processjob(req);
 });
 
@@ -141,6 +141,21 @@ app.io.route('pihalt', function (req) {
 // Show connected pi's ip
 app.io.route('piip', function(req) {
     console.log(req.data);
+});
+
+// Upload pics
+app.io.route('uploadpic', function(req) {
+    index.uploadpic(req);
+});
+
+//Remove picture from database
+app.io.route('removepic', function(req) {
+    index.removepic(req);
+});
+
+//Remove picture from database
+app.io.route('processjob', function(req) {
+    index.processjob(req);
 });
 
 //##############################################################################################

@@ -124,7 +124,7 @@ function piVM(data) {
     this.newJob = function() {
     	this.hasJob(true);
 		join('piid'+this.piID()); // Join pi room
-		io.emit('newjob', this.piID()); // Requests server for a new job
+		io.emit('pinewjob', this.piID()); // Requests server for a new job
     }
 
     this.discardJob = function() {
@@ -135,11 +135,11 @@ function piVM(data) {
         
     this.processJob = function() {
     console.log(this.iID);
-    	io.emit('processjob', {piid: this.piID(), iid: this.iID});
+    	io.emit('piprocessjob', {piid: this.piID(), iid: this.iID});
     }
 
     this.takePic = function(){
-    	io.emit('takepic', this.piID());
+    	io.emit('pitakepic', this.piID());
     	//this.addPic('../img/intro-bg.jpg')
     }
     
@@ -148,7 +148,7 @@ function piVM(data) {
     }
 
     this.removePic = function(url) {
-    	io.emit('removepic', url);
+    	io.emit('piremovepic', url);
     	this.picArray.remove(function(pic) {return pic.url() == url});
     }
     

@@ -7,12 +7,12 @@ block content
   .main
     .main-body
       .container
-          .row(data-bind="visible: !displayProgress() && !displayModel()")
+          .row(style="display: none", data-bind="visible: !displayProgress() && !displayModel()")
             .col-md-8.col-md-offset-2
               h1 Job in queue
               h2(data-bind="text: 'Your job is numbered ' + jobID + '. Currently processing job ' + currentJob() + '.'")
             .container
-          .row(data-bind="visible: displayProgress() && !displayModel()")
+          .row(style="display: none", data-bind="visible: displayProgress() && !displayModel()")
             .col-md-8.col-md-offset-2
               h1 Job processing
               h2(data-bind="text: progressPercent() + '% ' + progressMessage()")
