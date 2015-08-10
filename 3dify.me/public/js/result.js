@@ -97,6 +97,8 @@ function statusVM(id, job, progress) {
     
     this.progressMessage = ko.computed(function() {
     	switch(this.currentProgress()) {
+    		case 0:
+    			return "Starting reconstruction...";
 		    case 1:
 		        return "Preparing photos...";
 		        break;

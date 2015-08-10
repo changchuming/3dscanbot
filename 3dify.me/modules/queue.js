@@ -13,10 +13,15 @@ exports.initialize = function () {
 // Process queue
 exports.process = function() {
 	jobs.process('reconstruct', function (job, done){
-		// Tells server which job is current processing
+		// Tells server and client which job is current processing
+		app.io.room('resultwatch').broadcast('currentjob', job.id);
 		redisClient.set('currentjob', job.id, function(err,reply) {
 			console.log('Job ' + job.id + ': ' + job.data.iid + ' is now processing');
-			app.io.room('resultwatch').broadcast('currentjob', job.id);
+		})
+		// Set current progress to 0 for server and client
+		app.io.room('resultwatch').broadcast('currentprogress', 0);
+		redisClient.set('currentprogress', 0, function(err,reply) {
+			console.log('currentprogress is ' + 0);
 		})
 		// Start python reconstruction
 		pyfunc.reconstruct(job.data.iid, done);
