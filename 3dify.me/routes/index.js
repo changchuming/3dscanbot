@@ -50,7 +50,7 @@ exports.upload = function(req, res){
 	});
     form.on ('fileBegin', function(name, file){
             //rename the incoming file to the file's name
-            file.path = form.uploadDir + "/" + Date.now();
+            file.path = form.uploadDir + "/" + Date.now() + ".jpg";
     })
     form.parse(req, function(err, fields, files) {
       	//console.log(files);
