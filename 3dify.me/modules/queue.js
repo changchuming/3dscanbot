@@ -19,9 +19,9 @@ exports.process = function() {
 			console.log('Job ' + job.id + ': ' + job.data.iid + ' is now processing');
 		})
 		// Set current progress to 0 for server and client
-		app.io.room('resultwatch').broadcast('currentprogress', 0);
-		redisClient.set('currentprogress', 0, function(err,reply) {
-			console.log('currentprogress is ' + 0);
+		app.io.room('resultwatch').broadcast('currentprogress', 1);
+		redisClient.set('currentprogress', 1, function(err,reply) {
+			console.log('currentprogress is ' + 1);
 		})
 		// Start python reconstruction
 		pyfunc.reconstruct(job.data.iid, done);

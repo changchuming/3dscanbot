@@ -48,6 +48,10 @@ exports.upload = function(req, res){
 			form.uploadDir = "./public/uploads/"+value;
 		}
 	});
+    form.on ('fileBegin', function(name, file){
+            //rename the incoming file to the file's name
+            file.path = form.uploadDir + "/" + Date.now();
+    })
     form.parse(req, function(err, fields, files) {
       	//console.log(files);
       	if (files.upload.constructor === Array) {
