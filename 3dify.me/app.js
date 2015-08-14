@@ -186,6 +186,6 @@ app.get('/about', displayAbout);
 //##############################################################################################
 // Display about page
 //##############################################################################################
-var displayAbout = function(req, res){
+displayAbout = function(req, res){
   	res.render('about', function(err, reply) {});
 };
