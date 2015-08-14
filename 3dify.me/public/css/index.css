@@ -6,6 +6,10 @@ body {
   text-align: center;
 }
 
+.about-text {
+    font-size: 2vmin !important;
+}
+
 .btn-file {
     position: relative;
     overflow: hidden;
