@@ -187,5 +187,5 @@ app.get('/:jobid', result.display);
 // Display about page
 //##############################################################################################
 function displayAbout (req, res){
-  	res.render('about', function(err, reply) {});
+  	res.render('about');
 };
