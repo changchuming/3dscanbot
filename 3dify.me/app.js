@@ -162,99 +162,30 @@ app.io.route('processjob', function(req) {
 // Display landing page
 //##############################################################################################
 app.get('/', index.display);
-//app.get('/upload', index.upload);
 
 //##############################################################################################
 // Logic to upload photos
 //##############################################################################################
-
 app.post('/upload', index.upload);
-
-/* function (req, res) {
-
-	//index.upload(req,res);
-		
-		
-	if(req.method.toLowerCase() == 'post'){
-		
-		console.log("hello2");
-		var form = new formidable.IncomingForm();
-		
-    	form.parse(req, function(err, fields, files) {
-    	    console.log(util.inspect({fields: fields, files: files}));
-      		res.writeHead(200, {'content-type': 'text/plain'});
-      		console.log("hello3");
-      		res.write('received upload:\n\n');
-      		console.log("hello4");
-      		res.end(util.inspect({fields: fields, files: files}));
-      		console.log("hello5");
-    	});
-
-    return;
-	}
-	*/
-		
-	/*
-    var form = new formidable.IncomingForm;
-    // form.uploadDir = "./upload";
-    console.log(form.uploadDir);
-
-    form.parse(req, function(err, fields, files){
-      if (err) return res.end('You found error');
-      console.log(files.image);
-    });
-
-    form.on('progress', function(bytesReceived, bytesExpected) {
-        console.log(bytesReceived + ' ' + bytesExpected);
-    });
-
-    form.on('error', function(err) {
-        res.writeHead(200, {'content-type': 'text/plain'});
-        res.end('error:\n\n'+util.inspect(err));
-    });
-
-    // res.end('Done');
-    res.send("well done");
-
-    return;
-    */
-//});
-
-/*
-app.post('/api/photo',function(req,res){
-  if(done==true){
-    console.log(req.files);
-    res.end("File uploaded.");
-  }
-});
-
-app.listen(44444,function(){
-    console.log("Working on port 44444");
-});
-
-//app.post('/upload', index.upload);
-
-//app.get('/show', index.show)
-
-//app.get('/upload', index.upload);
-*/
-
 
 //##############################################################################################
 // Display pi landing page
 //##############################################################################################
-
 app.get('/pi', pi.display);
 
 //##############################################################################################
 // Display result of run
 //##############################################################################################
-
-/*
-app.get('/:jobname', result.display);
-//app.get('/r/:result', result.display);
-
-*/
-
 app.get('/:jobid', result.display);
 
+//##############################################################################################
+// Render about page
+//##############################################################################################
+app.get('/about', displayAbout);
+
+//##############################################################################################
+// Display about page
+//##############################################################################################
+var about = function(req, res){
+  	res.render('about');
+};
