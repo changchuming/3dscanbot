@@ -4,6 +4,10 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+#fb-root {
+    width: 100% !important;
+}
+
 .center {
      float: none;
      margin-left: auto;
