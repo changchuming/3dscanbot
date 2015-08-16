@@ -96,6 +96,7 @@ function statusVM(id, job, progress) {
 				this.displayModel();
 				return false;
 			} else {
+				this.displayError(false);
 				return true;
 			}
 		} else if (this.currentJob() > this.jobID) { // Finished
