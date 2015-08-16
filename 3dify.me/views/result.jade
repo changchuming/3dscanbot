@@ -7,16 +7,20 @@ block content
   .main
     .main-body
       .container
-          .row(style="display: none", data-bind="visible: !displayProgress() && !displayModel()")
+          .row(style="display: none", data-bind="visible: !displayProgress() && !modelExists()")
             .col-md-8.col-md-offset-2
               h1 Job in queue
               h2(data-bind="text: 'Your job is numbered ' + jobID + '. Currently processing job ' + currentJob() + '.'")
             .container
-          .row(style="display: none", data-bind="visible: displayProgress() && !displayModel()")
+          .row(style="display: none", data-bind="visible: displayProgress() && !modelExists()")
             .col-md-8.col-md-offset-2
               h1 Job processing
               h2(data-bind="text: progressPercent() + '% ' + progressMessage()")
-      x3d(style='width:100%; height:600px; border:0; margin:0; padding:0;' data-bind="visible: displayModel()")
+          .row(style="display: none", data-bind="visible: displayError()")
+            .col-md-8.col-md-offset-2
+              h1 Error
+              h2 An error occurred during reconstruction. Check that you have uploaded at least 3 photos. It is recommended that photos be taken with large overlaps so the resulting model will be more accurate.
+      x3d(style='width:100%; height:600px; border:0; margin:0; padding:0;' data-bind="visible: modelExists()")
         scene
           inline(data-bind="attr: { url: modelURL()}")
 block footer

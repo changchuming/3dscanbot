@@ -39,29 +39,41 @@ exports.display = function(req, res){
 //Uploads files and adds to queue
 //##############################################################################################
 exports.upload = function(req, res){
-	var form = new formidable.IncomingForm();
+	var form = new formidable.IncomingForm(),
+            //files = [],
+            //fields = [],
+            //returnJson = {},
+            iid;
 	
 	form.keepExtensions = true;
 	form.multiples = true;
 	form.on('field', function(name, value) {
+		//fields.push([name, value]);
 		if (name='iid') {
 			form.uploadDir = "./public/uploads/"+value;
+			iid = value;
 		}
 	});
     form.on ('fileBegin', function(name, file){
-            //rename the incoming file to the file's name
-            file.path = form.uploadDir + "/" + Date.now() + ".jpg";
+			var fileType = file.type.split('/').pop();
+            if(fileType == 'jpg' || fileType == 'jpeg' ){
+                //rename the incoming file to the current timestamp
+            	file.path = form.uploadDir + "/" + Date.now() + ".jpg";
+            } else {
+                file.path = form.uploadDir + "/" + Date.now() + "." + fileType;
+            }
     })
-    form.parse(req, function(err, fields, files) {
-      	//console.log(files);
-      	if (files.upload.constructor === Array) {
-      		for (file in files.upload) {
-      			app.io.room('iid'+fields.iid).broadcast('addpic', files.upload[file].path.replace('public', ''));
-      		}
-      	} else {
-      		app.io.room('iid'+fields.iid).broadcast('addpic', files.upload.path.replace('public', ''));
-      	}
-    });
+    .on('file', function(name, file) {
+            //on file received
+            //files.push([name, file]);
+            var fileType = file.type.split('/').pop();
+            if(fileType == 'jpg' || fileType == 'jpeg' ){
+            	app.io.room('iid'+iid).broadcast('addpic', file.path.replace('public', ''));
+            }
+        })
+    
+    form.parse(req);
+    res.send('done');
 }
 
 //##############################################################################################

@@ -56,8 +56,9 @@ function statusVM(id, job, progress) {
 	this.currentJob = ko.observable(parseInt(job));
 	this.currentProgress = ko.observable(parseInt(progress));
 	this.currentStatus = ko.observable('Getting status...');
-	this.displayModel = ko.observable(false);
+	this.modelExists = ko.observable(false);
 	this.modelURL = ko.observable('');
+	this.displayError = ko.observable(false);
 	
     this.updateJob = function(job) {
     	this.currentJob(parseInt(job));
@@ -79,8 +80,7 @@ function statusVM(id, job, progress) {
 				stop('currentprogress');
 				stop('currentjob');
 				leave('resultwatch');
-				this.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
-				this.displayModel(true);
+				this.displayModel();
 				return false;
 			} else {
 				return true;
@@ -89,11 +89,25 @@ function statusVM(id, job, progress) {
 			stop('currentprogress');
 			stop('currentjob');
 			leave('resultwatch');
-			this.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
-			this.displayModel(true);
+			this.displayModel();
 			return false;
 		}
     }, this);
+    
+    this.displayModel = function() {
+	    $.ajax({
+	        type: 'HEAD',
+	        url: '/uploads/' + iid + '/coloredmodel.x3d',
+	        crossDomain: true,
+	        success: function () {
+	        	this.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
+	        	this.modelExists(true);
+	        },
+	        error: function () {
+	            this.displayError(true);
+	        }
+	    });
+    }
     
     this.progressMessage = ko.computed(function() {
     	switch(this.currentProgress()) {
