@@ -79,9 +79,9 @@ function statusVM(id, job, progress) {
 	        crossDomain: true,
 	        success: function () {
 	        	currentStatusVM.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
-	        	currentStatusVM.modelExists(true);
 	        },
 	        error: function () {
+	        	currentStatusVM.modelExists(false);
 	            currentStatusVM.displayError(true);
 	        }
 	    });
@@ -92,18 +92,14 @@ function statusVM(id, job, progress) {
     		return false;
 		} else if (this.currentJob() == this.jobID) { // Ongoing
 			if (this.progressPercent() == 100) {
-				stop('currentprogress');
-				stop('currentjob');
-				leave('resultwatch');
+				this.modelExists(true);
 				this.displayModel();
 				return false;
 			} else {
 				return true;
 			}
 		} else if (this.currentJob() > this.jobID) { // Finished
-			stop('currentprogress');
-			stop('currentjob');
-			leave('resultwatch');
+			this.modelExists(true);
 			this.displayModel();
 			return false;
 		}
