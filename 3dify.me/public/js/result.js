@@ -72,6 +72,21 @@ function statusVM(id, job, progress) {
         return Math.round(this.currentProgress() / this.maxProgress * 100);
     }, this);
     
+    this.displayModel = function() {
+	    $.ajax({
+	        type: 'HEAD',
+	        url: '/uploads/' + iid + '/coloredmodel.x3d',
+	        crossDomain: true,
+	        success: function () {
+	        	currentStatusVM.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
+	        	currentStatusVM.modelExists(true);
+	        },
+	        error: function () {
+	            currentStatusVM.displayError(true);
+	        }
+	    });
+    };
+    
     this.displayProgress = ko.computed(function() {
     	if (this.currentJob() < this.jobID) {
     		return false;
@@ -93,21 +108,6 @@ function statusVM(id, job, progress) {
 			return false;
 		}
     }, this);
-    
-    this.displayModel = function() {
-	    $.ajax({
-	        type: 'HEAD',
-	        url: '/uploads/' + iid + '/coloredmodel.x3d',
-	        crossDomain: true,
-	        success: function () {
-	        	this.modelURL('/uploads/' + iid + '/coloredmodel.x3d');
-	        	this.modelExists(true);
-	        },
-	        error: function () {
-	            this.displayError(true);
-	        }
-	    });
-    }
     
     this.progressMessage = ko.computed(function() {
     	switch(this.currentProgress()) {
