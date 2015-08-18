@@ -8,7 +8,19 @@ var MAX_PROGRESS = 8;
 //##############################################################################################
 // Run python reconstruction on specific job
 //##############################################################################################
-exports.reconstruct = function(iid, done) {
+exports.reconstruct = function(jobid, iid, done) {
+
+	// Tells server and client which job is current processing
+	// Set current progress to 0 for server and client
+	app.io.room('resultwatch').broadcast('currentprogress', 1);
+	redisClient.set('currentprogress', 1, function(err,reply) {
+		console.log('currentprogress is ' + 1);
+	})
+	app.io.room('resultwatch').broadcast('currentjob', job.id);
+	redisClient.set('currentjob', jobid, function(err,reply) {
+		console.log('Job ' + jobid + ': ' + iid + ' is now processing');
+	})
+		
 	python = child.spawn(
 		'python',
     	['-u' , // unbuffered output
