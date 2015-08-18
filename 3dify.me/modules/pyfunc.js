@@ -16,7 +16,7 @@ exports.reconstruct = function(jobid, iid, done) {
 	redisClient.set('currentprogress', 1, function(err,reply) {
 		console.log('currentprogress is ' + 1);
 	})
-	app.io.room('resultwatch').broadcast('currentjob', job.id);
+	app.io.room('resultwatch').broadcast('currentjob', jobid);
 	redisClient.set('currentjob', jobid, function(err,reply) {
 		console.log('Job ' + jobid + ': ' + iid + ' is now processing');
 	})
