@@ -13,9 +13,8 @@ exports.initialize = function () {
 // Process queue
 exports.process = function() {
 	jobs.process('reconstruct', function (job, done){
-
 		// Start python reconstruction
-		pyfunc.reconstruct(job.data.iid, done);
+		pyfunc.reconstruct(job.id, job.data.iid, done);
 	})
 }
 
