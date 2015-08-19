@@ -37,8 +37,10 @@ exports.reconstruct = function(iid, done) {
 		else {
 			// No error
 		}
-		console.log('Job is done.');
-		app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
+		setTimeout(function() {
+			console.log('Job is done.');
+			app.io.room('resultwatch').broadcast('currentprogress', MAX_PROGRESS);
+		}, 3000);
 		redisClient.set('currentprogress', MAX_PROGRESS, function(err,reply) {
 			console.log('currentprogress is ' + MAX_PROGRESS);
 		})
