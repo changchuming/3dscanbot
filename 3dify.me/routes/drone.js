@@ -15,7 +15,7 @@ var fs = require('fs');
 exports.display = function(req, res){
   	// commenting out the main index page
   	redisClient.hgetall('pis', function(err, reply) {
-	  	res.render('pi', {
+	  	res.render('drone', {
 	  		pis: JSON.stringify(reply)
 	  	});
 	});
