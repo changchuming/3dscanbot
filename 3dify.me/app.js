@@ -37,7 +37,7 @@ queue.process();
 //----------------------------------------------------------------------------------------------
 var index = require('./routes');
 var result = require('./routes/result');
-var pi = require('./routes/pi');
+var drone = require('./routes/drone');
 
 //----------------------------------------------------------------------------------------------
 // Express - All environments
@@ -105,37 +105,37 @@ app.io.route('leave', function(req) {
 
 // Special case when pi connects
 app.io.route('pijoin', function(req) {
-    pi.pijoin(req);
+    drone.pijoin(req);
 });
 
 // Set new job with iid for pi
 app.io.route('pinewjob', function(req) {
-    pi.newjob(req);
+    drone.newjob(req);
 });
 
 // Asks a certain pi to take a picture
 app.io.route('pitakepic', function(req) {
-    pi.takepic(req);
+    drone.takepic(req);
 });
 
 // Asks a certain pi to add a picture
 app.io.route('piaddpic', function(req) {
-    pi.addpic(req);
+    drone.addpic(req);
 });
 
 // Remove picture from database
 app.io.route('piremovepic', function(req) {
-    pi.removepic(req);
+    drone.removepic(req);
 });
 
 // Remove picture from database
 app.io.route('piprocessjob', function(req) {
-    pi.processjob(req);
+    drone.processjob(req);
 });
 
 // Halt / shutdown a pi
 app.io.route('pihalt', function (req) {
-	pi.pihalt(req);
+	drone.pihalt(req);
 });
 
 // Show connected pi's ip
@@ -171,7 +171,7 @@ app.post('/upload', index.upload);
 //##############################################################################################
 // Display pi landing page
 //##############################################################################################
-app.get('/pi', pi.display);
+app.get('/drone', drone.display);
 
 //##############################################################################################
 //Render about page
