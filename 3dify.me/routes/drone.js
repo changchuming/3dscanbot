@@ -33,7 +33,7 @@ exports.newjob = function(req) {
 			iid = parseInt(reply)+1;
 		}
 		fs.mkdir('public/uploads/'+iid); // Make uploads folder for this job
-		fs.chown('public/uploads/'+iid, 1000); // Give ownership to ubuntu
+		fs.chown('public/uploads/'+iid, 1000, 1000); // Give ownership to ubuntu
 		redisClient.set('lastiid', iid, function (err, reply) {}); // Update last iid
 		app.io.room('piid'+req.data).broadcast('setiid', {piid: req.data, iid: iid});
 	});
