@@ -38,10 +38,8 @@ $SCALE=1.0;
      "Canon Canon DIGITAL IXUS II"      => 5.27,   # 1/2.7"
      "Canon Canon EOS 10D"              => 22.7,
      "Canon Canon EOS-1D Mark II"       => 28.7,
-     "Canon Canon EOS-1Ds Mark II"      => 35.95,
-     "Canon Canon EOS 5D Mark II"      => 35.95,
-     "Canon Canon EOS-1Ds Mark III"      => 36.0,
-     "Canon Canon EOS  20D"             => 22.5,
+     "Canon Canon EOS-1Ds Mark II"      => 35.95,   
+     "Canon Canon EOS  20D"              => 22.5,
      "Canon Canon EOS 20D"              => 22.5,
      "Canon Canon EOS 300D DIGITAL"     => 22.66,
      "Canon Canon EOS 30D"              => 22.5,
@@ -268,7 +266,6 @@ $SCALE=1.0;
      "RICOH CaplioG3 modelM"            => 5.27,   # 1/2.7"
      "RICOH       Caplio GX"      => 7.176,  # 1/1.8"
      "RICOH       Caplio R30"      => 5.75,   # 1/2.5"
-     "RICOH       RICOH R10"                => 5.68,   # 1/2.35"
      "Samsung  Digimax 301"             => 5.27,   # 1/2.7"
      "Samsung Techwin <Digimax i5, Samsung #1>" => 5.76,   # 1/2.5"
      "SAMSUNG TECHWIN Pro 815"      => 8.80,   # 2/3"
@@ -294,8 +291,6 @@ $SCALE=1.0;
      "SONY DSC-W5"                      => 7.176,  # 1/1.8"
      "SONY DSC-W7"                      => 7.176,  # 1/1.8"
      "SONY DSC-W80"                     => 5.75,   # 1/2.5"
-     "SONY DSLR-A700" => 23.6, 
-     "SONY DSLR-A100" => 23.6, 
 );
 
 `mkdir $OUT_DIR`;
