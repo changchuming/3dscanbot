@@ -9,5 +9,5 @@
 ![alt tag](https://cloud.githubusercontent.com/assets/10717593/16757885/dc029caa-480e-11e6-9ec4-84baf39b55a1.png)
 
 ##Contributors
-- Chang Chu-ming
-- Lee Kai Yi 
+- Chang Chu-ming [@changchuming](http://github.com/changchuming)
+- Lee Kai Yi [@kaiyisg](http://github.com/kaiyisg)
