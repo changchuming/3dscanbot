@@ -1,0 +1,26 @@
+PMVS -> CMVS-PMVS
+
+... and Meshlab, which is used to reconstruct surface models...
+
+The benefit of VisualSFM is that it has a GUI, but we will not be needing it in this project so this is irrelevant. On the other hand, VisualSFM is not open-source, so it is not customizable to our liking.
+
+A practical consideration is that all our reconstruction tools need to be compilable and executable on a 32-bit Linux system.
+
+For our back-end web server, we chose Node.js, a rapidly developing framework that allows us to code both our back-end server and front-end web application in Javascript.
+
+Our middleware, which connects the Raspberry Pi to the web server and the web server to the reconstruction software, uses Python scripts as they are easily manageable and do not need to be compiled to be run. We use the Secure Copy (SCP) service to transmit photos from the Raspberry Pi to the web server. The process is authenticated by providing a private key which has its corresponding public key preloaded into the server's ssh-agent.
+
+Our front-end web application was done in Jade and Javascript. Knockout.js is used as our web framework due to its methodological Model-View-Viewmodel (MVVM) pattern. Bootstrap.js is used to style the web application and optimize the application for mobile devices.
+
+Problems encountered
+The first problem that we encountered is that certain newer packages are incompatible with Bundler. We resolved this by installing them in legacy mode.
+Next, one major issue that we had to deal with is the linking of various components to produce a streamlined system. For example, how should we control the Raspberry Pi via the web application? Eventually, we decided that instead of having the web application send commands to the Raspberry Pi via the web server, we would have the Raspberry Pi open a socket connection to the web server and constantly monitor the web server for actions initiated by the web application. This has the added benefit of real time dynamic updates to the web application, such that the user can take, delete and process photos without having to refresh the webpage.
+A related problem is how the web server can monitor the process of 3D reconstruction after it has initiated a task. We needed a way for Bundler to expose its variables to the web server such that it can capture and provide feedback to the web application. This way, the user is able to know which step of the reconstruction process is currently being performed. In the end, we achieved this by getting the Python script, which contains the whole reconstruction toolchain, to print to the console after each step is done. The web server then retrieves these messages in the form of a response and pushes the result to the web server, such that the user gets a real-time update during the processing phase.
+
+Optimization
+We went through several optimization steps. Changing the reconstruction parameters so we get the best result.
+
+Final product
+Our final product is a web application with two separate use cases.
+The first is an upload page where users can conveniently upload images and subsequently send it for 3D reconstruction using four simple clicks of the mouse. The application will then provide the user with a link where the user can check back regularly to monitor the process of reconstruction. Once reconstruction is completed, the user will be presented with a 3D model which can be dragged, rotated, and zoomed. The user can also download this 3D model if he or she so wishes.
+The second is a page innately linked to our prototype drone. Once the drone is powered up, it will automatically connect to this page and the user will be presented with a control panel with the drone's name and a series of functions to manipulate the camera on the drone. These include take picture, delete picture, delete all pictures, process pictures, and shutdown. Once the user clicks the 'Process' button, the reconstruction step will be identical to that of a user uploading pictures independently as described above.
